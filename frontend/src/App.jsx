@@ -9,6 +9,8 @@ import ProductDetail from "./pages/ProductDetail";
 import Consultation from "./pages/Consultation";
 import AdminConsultations from "./pages/AdminConsultations";
 
+import AdminProducts from "./pages/AdminProducts";
+
 function App() {
   return (
     <BrowserRouter>
@@ -40,6 +42,11 @@ function App() {
         <Route
           path="/admin/consultations"
           element={<AdminConsultations />}
+        />
+
+        <Route
+          path="/admin/products"
+          element={<AdminProducts />}
         />
       </Routes>
 

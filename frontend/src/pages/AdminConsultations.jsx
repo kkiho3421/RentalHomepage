@@ -69,6 +69,12 @@ function AdminConsultations() {
                 )
             );
 
+            setSelectedConsultation((prev) =>
+                prev && prev.id === id
+                    ? updatedConsultation
+                    : prev
+            );
+
         } catch (error) {
             console.error(error);
 
@@ -423,13 +429,28 @@ function AdminConsultations() {
                             <div className="consultation-detail-item">
                                 <span>상태</span>
 
-                                <strong>
-                                    {selectedConsultation.status === "PENDING"
-                                        ? "접수 대기"
-                                        : selectedConsultation.status === "IN_PROGRESS"
-                                        ? "처리 중"
-                                        : "상담 완료"}
-                                </strong>
+                                <select
+                                    className={`status-select status-${selectedConsultation.status.toLowerCase()}`}
+                                    value={selectedConsultation.status}
+                                    onChange={(e) =>
+                                        handleStatusChange(
+                                            selectedConsultation.id,
+                                            e.target.value
+                                        )
+                                    }
+                                >
+                                    <option value="PENDING">
+                                        접수 대기
+                                    </option>
+
+                                    <option value="IN_PROGRESS">
+                                        처리 중
+                                    </option>
+
+                                    <option value="COMPLETED">
+                                        상담 완료
+                                    </option>
+                                </select>
                             </div>
 
                         </div>

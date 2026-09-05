@@ -1424,6 +1424,9 @@ select {
     word-break: break-all;
 }
 
+.consultation-detail-item .status-select {
+    width: 140px;
+}
 
 /* 문의 내용 */
 

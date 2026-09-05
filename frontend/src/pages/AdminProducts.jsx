@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getProductImageUrl } from "../utils/imageUrl";
 
 function AdminProducts() {
     const [products, setProducts] = useState([]);
@@ -6,6 +7,11 @@ function AdminProducts() {
     const [error, setError] = useState("");
     const [showAddForm, setShowAddForm] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
+    const [selectedImageFile, setSelectedImageFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState("");
+    const [uploadingImage, setUploadingImage] = useState(false);
+    const [editImageFile, setEditImageFile] = useState(null);
+    const [editImagePreview, setEditImagePreview] = useState("");
 
     const [newProduct, setNewProduct] = useState({
         category: "",
@@ -74,6 +80,12 @@ function AdminProducts() {
         e.preventDefault();
 
         try {
+            let imageUrl = newProduct.image;
+
+            if (selectedImageFile) {
+                imageUrl = await uploadProductImage();
+            }
+            
             const response = await fetch(
                 "http://localhost:8080/api/products",
                 {
@@ -83,6 +95,7 @@ function AdminProducts() {
                     },
                     body: JSON.stringify({
                         ...newProduct,
+                        image: imageUrl,
                         price: Number(newProduct.price),
                     }),
                 }
@@ -115,6 +128,9 @@ function AdminProducts() {
                 image: "",
             });
 
+            setSelectedImageFile(null);
+            setImagePreview("");
+
             setShowAddForm(false);
 
         } catch (error) {
@@ -139,6 +155,36 @@ function AdminProducts() {
         e.preventDefault();
 
         try {
+            let imageUrl = editingProduct.image;
+
+            if (editImageFile) {
+                const formData = new FormData();
+
+                formData.append(
+                    "image",
+                    editImageFile
+                );
+
+                const imageResponse = await fetch(
+                    "http://localhost:8080/api/uploads/product-image",
+                    {
+                        method: "POST",
+                        body: formData,
+                    }
+                );
+
+                if (!imageResponse.ok) {
+                    throw new Error(
+                        "이미지 업로드에 실패했습니다."
+                    );
+                }
+
+                const imageData =
+                    await imageResponse.json();
+
+                imageUrl = imageData.imageUrl;
+            }
+
             const response = await fetch(
                 `http://localhost:8080/api/products/${editingProduct.id}`,
                 {
@@ -148,6 +194,7 @@ function AdminProducts() {
                     },
                     body: JSON.stringify({
                         ...editingProduct,
+                        image: imageUrl,
                         price: Number(editingProduct.price),
                     }),
                 }
@@ -171,6 +218,8 @@ function AdminProducts() {
             );
 
             setEditingProduct(null);
+            setEditImageFile(null);
+            setEditImagePreview("");
 
         } catch (error) {
             console.error(error);
@@ -218,7 +267,86 @@ function AdminProducts() {
             );
         }
     };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        if (!file.type.startsWith("image/")) {
+            alert("이미지 파일만 선택할 수 있습니다.");
+            return;
+        }
+
+        setSelectedImageFile(file);
+
+        const previewUrl =
+            URL.createObjectURL(file);
+
+        setImagePreview(previewUrl);
+    };
+
+
+    const uploadProductImage = async () => {
+        if (!selectedImageFile) {
+            return null;
+        }
+
+        try {
+            setUploadingImage(true);
+
+            const formData = new FormData();
+
+            formData.append(
+                "image",
+                selectedImageFile
+            );
+
+            const response = await fetch(
+                "http://localhost:8080/api/uploads/product-image",
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    "이미지 업로드에 실패했습니다."
+                );
+            }
+
+            const data = await response.json();
+
+            return data.imageUrl;
+
+        } finally {
+            setUploadingImage(false);
+        }
+    };
     
+    const handleEditImageChange = (e) => {
+        const file = e.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        if (!file.type.startsWith("image/")) {
+            alert("이미지 파일만 선택할 수 있습니다.");
+            return;
+        }
+
+        setEditImageFile(file);
+
+        const previewUrl =
+            URL.createObjectURL(file);
+
+        setEditImagePreview(previewUrl);
+    };
+
     if (loading) {
         return (
             <main className="admin-products-page">
@@ -410,14 +538,22 @@ function AdminProducts() {
                             </div>
 
                             <div className="admin-product-form-full">
-                                <label>이미지 URL</label>
+                                <label>상품 이미지</label>
+
                                 <input
-                                    type="text"
-                                    name="image"
-                                    value={newProduct.image}
-                                    onChange={handleNewProductChange}
-                                    placeholder="/images/product1.jpg"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
                                 />
+
+                                {imagePreview && (
+                                    <div className="admin-product-preview">
+                                        <img
+                                            src={imagePreview}
+                                            alt="상품 이미지 미리보기"
+                                        />
+                                    </div>
+                                )}
                             </div>
 
                             <div className="admin-product-form-full">
@@ -433,7 +569,6 @@ function AdminProducts() {
                         </div>
 
                         <div className="admin-product-form-buttons">
-
                             <button
                                 type="button"
                                 onClick={() =>
@@ -443,10 +578,14 @@ function AdminProducts() {
                                 취소
                             </button>
 
-                            <button type="submit">
-                                등록
+                            <button
+                                type="submit"
+                                disabled={uploadingImage}
+                            >
+                                {uploadingImage
+                                    ? "이미지 업로드 중..."
+                                    : "등록"}
                             </button>
-
                         </div>
                     </form>
                 )}
@@ -567,13 +706,25 @@ function AdminProducts() {
                             </div>
 
                             <div className="admin-product-form-full">
-                                <label>이미지 URL</label>
+                                <label>상품 이미지</label>
+
+                                <div className="admin-product-preview">
+                                    <img
+                                        src={
+                                            editImagePreview
+                                                ? editImagePreview
+                                                : getProductImageUrl(
+                                                    editingProduct.image
+                                                )
+                                        }
+                                        alt="상품 이미지 미리보기"
+                                    />
+                                </div>
 
                                 <input
-                                    type="text"
-                                    name="image"
-                                    value={editingProduct.image ?? ""}
-                                    onChange={handleEditProductChange}
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleEditImageChange}
                                 />
                             </div>
 
@@ -594,9 +745,11 @@ function AdminProducts() {
 
                             <button
                                 type="button"
-                                onClick={() =>
-                                    setEditingProduct(null)
-                                }
+                                onClick={() => {
+                                    setEditingProduct(null);
+                                    setEditImageFile(null);
+                                    setEditImagePreview("");
+                                }}
                             >
                                 취소
                             </button>
@@ -645,7 +798,7 @@ function AdminProducts() {
 
                                         <td>
                                             <img
-                                                src={product.image}
+                                                src={getProductImageUrl(product.image)}
                                                 alt={product.name}
                                                 className="admin-product-image"
                                             />
@@ -675,6 +828,10 @@ function AdminProducts() {
                                                     className="admin-product-edit-button"
                                                     onClick={() => {
                                                         setShowAddForm(false);
+
+                                                        setEditImageFile(null);
+                                                        setEditImagePreview("");
+
                                                         setEditingProduct(product);
                                                     }}
                                                 >

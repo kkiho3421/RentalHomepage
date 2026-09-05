@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { getProductImageUrl } from "../utils/imageUrl";
 
 function ProductDetail() {
     const { id } = useParams();
@@ -12,7 +13,7 @@ function ProductDetail() {
         const fetchProduct = async () => {
             setLoading(true);
             setError("");
-            
+
             try {
                 const response = await fetch(
                     `http://localhost:8080/api/products/${id}`
@@ -84,7 +85,7 @@ function ProductDetail() {
                 <div className="detail-image">
 
                     <img
-                        src={product.image}
+                        src={getProductImageUrl(product.image)}
                         alt={product.name}
                     />
 

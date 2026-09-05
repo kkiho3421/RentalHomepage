@@ -1927,3 +1927,16 @@ select {
         grid-column: auto;
     }
 }
+
+.admin-product-preview {
+    margin-top: 15px;
+}
+
+.admin-product-preview img {
+    width: 180px;
+    max-height: 180px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+}

@@ -3,6 +3,7 @@ import {
     Link,
     useSearchParams,
 } from "react-router-dom";
+import { getProductImageUrl } from "../utils/imageUrl";
 
 function Products() {
     const [searchParams, setSearchParams] =
@@ -547,7 +548,7 @@ function Products() {
                                         <div className="product-image">
 
                                             <img
-                                                src={product.image}
+                                                src={getProductImageUrl(product.image)}
                                                 alt={product.name}
                                             />
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { getProductImageUrl } from "../utils/imageUrl";
 
 function Home() {
     const navigate = useNavigate();
@@ -188,7 +189,7 @@ function Home() {
                             <div className="product-image">
 
                                 <img
-                                    src={product.image}
+                                    src={getProductImageUrl(product.image)}
                                     alt={product.name}
                                 />
 

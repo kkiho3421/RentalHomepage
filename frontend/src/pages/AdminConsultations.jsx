@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import products from "../data/products";
 
 function AdminConsultations() {
     const [consultations, setConsultations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [selectedConsultation, setSelectedConsultation] = useState(null);
+    const [products, setProducts] = useState([]);
 
     const [statusFilter, setStatusFilter] = useState("ALL");
     const [searchKeyword, setSearchKeyword] = useState("");
@@ -43,6 +43,34 @@ function AdminConsultations() {
 
     }, []);
 
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch(
+                    "http://localhost:8080/api/products"
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        "상품 목록을 불러오지 못했습니다."
+                    );
+                }
+
+                const data = await response.json();
+
+                setProducts(data);
+
+            } catch (error) {
+                console.error(
+                    "상품 목록 조회 오류:",
+                    error
+                );
+            }
+        };
+
+        fetchProducts();
+    }, []);
+    
     const handleStatusChange = async (id, newStatus) => {
         try {
             const response = await fetch(

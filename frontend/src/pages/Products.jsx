@@ -4,11 +4,13 @@ import {
     useSearchParams,
 } from "react-router-dom";
 
-import products from "../data/products";
-
 function Products() {
     const [searchParams, setSearchParams] =
         useSearchParams();
+
+    const [products, setProducts] = useState([]);
+    const [productsLoading, setProductsLoading] = useState(true);
+    const [productsError, setProductsError] = useState("");
 
     // URL에 저장된 검색 조건
     const initialType = searchParams.get("type") || "";
@@ -54,6 +56,38 @@ function Products() {
 
         setSelectedPrintRange(printRange);
     }, [searchParams]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch(
+                    "http://localhost:8080/api/products"
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        "상품 목록을 불러오지 못했습니다."
+                    );
+                }
+
+                const data = await response.json();
+
+                setProducts(data);
+
+            } catch (error) {
+                console.error(error);
+
+                setProductsError(
+                    "상품 목록을 불러오는 중 오류가 발생했습니다."
+                );
+
+            } finally {
+                setProductsLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     /*
      * 제품 종류 체크박스
@@ -217,6 +251,22 @@ function Products() {
 
         setSearchParams({});
     };
+
+    if (productsLoading) {
+        return (
+            <main className="products-page">
+                <p>상품을 불러오는 중입니다.</p>
+            </main>
+        );
+    }
+
+    if (productsError) {
+        return (
+            <main className="products-page">
+                <p>{productsError}</p>
+            </main>
+        );
+    }
 
     return (
         <main className="products-page">

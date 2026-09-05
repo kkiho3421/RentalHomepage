@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import products from "../data/products";
 
 function Home() {
     const navigate = useNavigate();
@@ -8,6 +7,36 @@ function Home() {
     const [type, setType] = useState("");
     const [color, setColor] = useState("");
     const [printRange, setPrintRange] = useState("");
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch(
+                    "http://localhost:8080/api/products"
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        "상품 목록을 불러오지 못했습니다."
+                    );
+                }
+
+                const data = await response.json();
+
+                setProducts(data);
+
+            } catch (error) {
+                console.error(
+                    "인기 상품 조회 오류:",
+                    error
+                );
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     const handleSearch = () => {
         const params = new URLSearchParams();

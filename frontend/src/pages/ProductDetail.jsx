@@ -1,19 +1,72 @@
-import { Link, useParams, } from "react-router-dom";
-
-import products from "../data/products";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 function ProductDetail() {
-
     const { id } = useParams();
 
-    const product = products.find(
-        (item) => item.id === Number(id)
-    );
+    const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            setLoading(true);
+            setError("");
+            
+            try {
+                const response = await fetch(
+                    `http://localhost:8080/api/products/${id}`
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        "상품 정보를 불러오지 못했습니다."
+                    );
+                }
+
+                const data = await response.json();
+
+                setProduct(data);
+
+            } catch (error) {
+                console.error(error);
+
+                setError(
+                    "상품 정보를 불러오는 중 오류가 발생했습니다."
+                );
+
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProduct();
+    }, [id]);
+
+    if (loading) {
+        return (
+            <main className="product-detail-page">
+                <p>상품 정보를 불러오는 중입니다.</p>
+            </main>
+        );
+    }
+
+    if (error) {
+        return (
+            <main className="product-detail-page">
+                <p>{error}</p>
+
+                <Link to="/products">
+                    상품 목록으로 돌아가기
+                </Link>
+            </main>
+        );
+    }
 
     if (!product) {
         return (
-            <main className="not-found">
-                <h1>상품을 찾을 수 없습니다.</h1>
+            <main className="product-detail-page">
+                <p>상품을 찾을 수 없습니다.</p>
 
                 <Link to="/products">
                     상품 목록으로 돌아가기

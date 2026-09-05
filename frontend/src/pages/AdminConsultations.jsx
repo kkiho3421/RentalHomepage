@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import products from "../data/products";
 
 function AdminConsultations() {
     const [consultations, setConsultations] = useState([]);
@@ -74,6 +75,21 @@ function AdminConsultations() {
         }
     };
 
+    const getProductName = (productId) => {
+        if (!productId) {
+            return "-";
+        }
+
+        const product = products.find(
+            (product) =>
+                String(product.id) === String(productId)
+        );
+
+        return product
+            ? product.name
+            : `상품 ID ${productId}`;
+    };
+
     if (loading) {
         return (
             <main className="admin-consultations-page">
@@ -143,7 +159,7 @@ function AdminConsultations() {
                                     <th>이름</th>
                                     <th>회사명</th>
                                     <th>연락처</th>
-                                    <th>상품 ID</th>
+                                    <th>상담 상품</th>
                                     <th>상태</th>
                                 </tr>
                             </thead>
@@ -184,7 +200,7 @@ function AdminConsultations() {
                                             </td>
 
                                             <td>
-                                                {consultation.productId ?? "-"}
+                                                {getProductName(consultation.productId)}
                                             </td>
 
                                             <td>
@@ -304,9 +320,11 @@ function AdminConsultations() {
                             </div>
 
                             <div className="consultation-detail-item">
-                                <span>상품 ID</span>
+                                <span>상담 상품</span>
                                 <strong>
-                                    {selectedConsultation.productId ?? "-"}
+                                    {getProductName(
+                                        selectedConsultation.productId
+                                    )}
                                 </strong>
                             </div>
 

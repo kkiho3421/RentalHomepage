@@ -1461,7 +1461,9 @@ select {
 }
 
 
-/* 모바일 */
+/* =========================
+   모바일 - 상담 상세 모달
+========================= */
 
 @media (max-width: 600px) {
 
@@ -1471,5 +1473,97 @@ select {
 
     .consultation-detail-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================
+   Admin 상담 필터 / 검색
+========================= */
+
+.admin-consultations-tools {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.admin-status-filters {
+    display: flex;
+    gap: 8px;
+}
+
+.admin-status-filters button {
+    padding: 9px 16px;
+
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #555555;
+
+    cursor: pointer;
+
+    transition: all 0.15s ease;
+}
+
+.admin-status-filters button:hover {
+    border-color: #999999;
+    color: #111111;
+}
+
+.admin-status-filters button.active {
+    background: #111111;
+    border-color: #111111;
+
+    color: #ffffff;
+}
+
+.admin-consultation-search input {
+    width: 260px;
+    height: 40px;
+
+    padding: 0 14px;
+
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    font-size: 13px;
+    font-family: inherit;
+
+    outline: none;
+}
+
+.admin-consultation-search input:focus {
+    border-color: #111111;
+}
+
+
+/* =========================
+   Admin 상담 필터 모바일
+========================= */
+
+@media (max-width: 800px) {
+
+    .admin-consultations-tools {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-status-filters {
+        flex-wrap: wrap;
+    }
+
+    .admin-consultation-search input {
+        width: 100%;
     }
 }

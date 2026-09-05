@@ -7,6 +7,9 @@ function AdminConsultations() {
     const [error, setError] = useState("");
     const [selectedConsultation, setSelectedConsultation] = useState(null);
 
+    const [statusFilter, setStatusFilter] = useState("ALL");
+    const [searchKeyword, setSearchKeyword] = useState("");
+
     useEffect(() => {
         const fetchConsultations = async () => {
             try {
@@ -75,6 +78,23 @@ function AdminConsultations() {
         }
     };
 
+    const filteredConsultations = consultations.filter((consultation) => {
+            const matchesStatus =
+                statusFilter === "ALL" ||
+                consultation.status === statusFilter;
+
+            const keyword = searchKeyword.trim().toLowerCase();
+
+            const matchesSearch =
+                keyword === "" ||
+                consultation.name?.toLowerCase().includes(keyword) ||
+                consultation.company?.toLowerCase().includes(keyword) ||
+                consultation.phone?.includes(keyword);
+
+            return matchesStatus && matchesSearch;
+        }
+    );
+
     const getProductName = (productId) => {
         if (!productId) {
             return "-";
@@ -139,11 +159,83 @@ function AdminConsultations() {
                     건
 
                 </div>
+                <div className="admin-consultations-tools">
 
-                {consultations.length === 0 ? (
+                    <div className="admin-status-filters">
+
+                        <button
+                            type="button"
+                            className={
+                                statusFilter === "ALL"
+                                    ? "active"
+                                    : ""
+                            }
+                            onClick={() => setStatusFilter("ALL")}
+                        >
+                            전체
+                        </button>
+
+                        <button
+                            type="button"
+                            className={
+                                statusFilter === "PENDING"
+                                    ? "active"
+                                    : ""
+                            }
+                            onClick={() => setStatusFilter("PENDING")}
+                        >
+                            접수 대기
+                        </button>
+
+                        <button
+                            type="button"
+                            className={
+                                statusFilter === "IN_PROGRESS"
+                                    ? "active"
+                                    : ""
+                            }
+                            onClick={() =>
+                                setStatusFilter("IN_PROGRESS")
+                            }
+                        >
+                            처리 중
+                        </button>
+
+                        <button
+                            type="button"
+                            className={
+                                statusFilter === "COMPLETED"
+                                    ? "active"
+                                    : ""
+                            }
+                            onClick={() =>
+                                setStatusFilter("COMPLETED")
+                            }
+                        >
+                            상담 완료
+                        </button>
+
+                    </div>
+
+                    <div className="admin-consultation-search">
+
+                        <input
+                            type="text"
+                            placeholder="이름, 회사명, 연락처 검색"
+                            value={searchKeyword}
+                            onChange={(e) =>
+                                setSearchKeyword(e.target.value)
+                            }
+                        />
+
+                    </div>
+
+                </div>
+
+                {filteredConsultations.length === 0 ? (
 
                     <div className="admin-empty">
-                        접수된 상담 신청이 없습니다.
+                        조건에 맞는 상담 신청이 없습니다.
                     </div>
 
                 ) : (
@@ -166,7 +258,7 @@ function AdminConsultations() {
 
                             <tbody>
 
-                                {consultations.map(
+                                {filteredConsultations.map(
                                     (consultation) => (
 
                                         <tr 

@@ -25,26 +25,61 @@ function Consultation() {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        if (!form.name.trim()) {
-            alert("이름을 입력해주세요.");
-            return;
+    if (!form.name.trim()) {
+        alert("이름을 입력해주세요.");
+        return;
+    }
+
+    if (!form.phone.trim()) {
+        alert("연락처를 입력해주세요.");
+        return;
+    }
+
+    if (!form.company.trim()) {
+        alert("회사명을 입력해주세요.");
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "http://localhost:8080/api/consultations",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: form.name,
+                    phone: form.phone,
+                    company: form.company,
+                    email: form.email,
+                    message: form.message,
+                    productId: product?.id ?? null,
+                }),
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("상담 신청 저장에 실패했습니다.");
         }
 
-        if (!form.phone.trim()) {
-            alert("연락처를 입력해주세요.");
-            return;
-        }
+        const data = await response.json();
 
-        if (!form.company.trim()) {
-            alert("회사명을 입력해주세요.");
-            return;
-        }
+        console.log("저장된 상담 정보:", data);
 
         setSubmitted(true);
-    };
+
+    } catch (error) {
+        console.error("상담 신청 오류:", error);
+
+        alert(
+            "상담 신청 중 오류가 발생했습니다. 서버가 실행 중인지 확인해주세요."
+        );
+    }
+};
 
     if (submitted) {
         return (

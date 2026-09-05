@@ -1194,3 +1194,93 @@ select {
 
   border-radius: 6px;
 }
+
+  /* =========================
+   Admin Consultations
+========================= */
+
+.admin-consultations-page {
+    min-height: 100vh;
+    background: #f7f8fa;
+}
+
+.admin-consultations-header {
+    padding: 70px 20px 50px;
+    text-align: center;
+    background: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.admin-consultations-header p {
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #777777;
+}
+
+.admin-consultations-header h1 {
+    margin-bottom: 14px;
+    font-size: 36px;
+}
+
+.admin-consultations-header span {
+    color: #666666;
+}
+
+.admin-consultations-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+}
+
+.admin-consultations-summary {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.admin-consultations-summary strong {
+    margin-left: 8px;
+    margin-right: 4px;
+    font-size: 24px;
+}
+
+.admin-table-wrapper {
+    overflow-x: auto;
+    background: #ffffff;
+    border-radius: 12px;
+}
+
+.admin-consultations-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-consultations-table th,
+.admin-consultations-table td {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid #eeeeee;
+    white-space: nowrap;
+}
+
+.admin-consultations-table th {
+    background: #f3f4f6;
+    font-size: 14px;
+}
+
+.admin-consultations-table td {
+    font-size: 14px;
+}
+
+.admin-consultations-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.admin-empty {
+    padding: 60px 20px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 12px;
+    color: #777777;
+}

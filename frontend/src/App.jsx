@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Consultation from "./pages/Consultation";
+import AdminConsultations from "./pages/AdminConsultations";
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
           element={<Consultation />}
         />
 
+        <Route
+          path="/admin/consultations"
+          element={<AdminConsultations />}
+        />
       </Routes>
 
       <Footer />

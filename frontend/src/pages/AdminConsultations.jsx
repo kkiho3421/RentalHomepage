@@ -4,6 +4,7 @@ function AdminConsultations() {
     const [consultations, setConsultations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [selectedConsultation, setSelectedConsultation] = useState(null);
 
     useEffect(() => {
         const fetchConsultations = async () => {
@@ -152,7 +153,11 @@ function AdminConsultations() {
                                 {consultations.map(
                                     (consultation) => (
 
-                                        <tr key={consultation.id}>
+                                        <tr 
+                                            key={consultation.id}
+                                            className="consultation-row"
+                                            onClick={() => setSelectedConsultation(consultation)}
+                                        >
 
                                             <td>
                                                 {consultation.id}
@@ -186,9 +191,8 @@ function AdminConsultations() {
 
                                                 <select
                                                     className={`status-select status-${consultation.status.toLowerCase()}`}
-                                                    value={
-                                                        consultation.status
-                                                    }
+                                                    value={consultation.status}
+                                                    onClick={(e) => e.stopPropagation()}
                                                     onChange={(e) =>
                                                         handleStatusChange(
                                                             consultation.id,
@@ -227,7 +231,110 @@ function AdminConsultations() {
                 )}
 
             </section>
+            {selectedConsultation && (
+                <div
+                    className="consultation-modal-overlay"
+                    onClick={() => setSelectedConsultation(null)}
+                >
+                    <div
+                        className="consultation-modal"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="consultation-modal-header">
+                            <div>
+                                <p>CONSULTATION DETAIL</p>
+                                <h2>상담 신청 상세</h2>
+                            </div>
+                            
+                            <button
+                                type="button"
+                                className="consultation-modal-close"
+                                onClick={() =>
+                                    setSelectedConsultation(null)
+                                }
+                            >
+                                ×
+                            </button>
+                        </div>
+                        
+                        <div className="consultation-detail-grid">
+                            
+                            <div className="consultation-detail-item">
+                                <span>접수번호</span>
+                                <strong>
+                                    #{selectedConsultation.id}
+                                </strong>
+                            </div>
+                            
+                            <div className="consultation-detail-item">
+                                <span>접수일</span>
+                                <strong>
+                                    {new Date(
+                                        selectedConsultation.createdAt
+                                        ).toLocaleString("ko-KR")}
+                                </strong>
+                            </div>
+                            
+                            <div className="consultation-detail-item">
+                                <span>이름</span>
+                                <strong>
+                                    {selectedConsultation.name}
+                                </strong>
+                            </div>
+                            
+                            <div className="consultation-detail-item">
+                                <span>회사명</span>
+                                <strong>
+                                    {selectedConsultation.company}
+                                </strong>
+                            </div>
+                            
+                            <div className="consultation-detail-item">
+                                <span>연락처</span>
+                                <strong>
+                                    {selectedConsultation.phone}
+                                </strong>
+                            </div>
 
+                            <div className="consultation-detail-item">
+                                <span>이메일</span>
+                                <strong>
+                                    {selectedConsultation.email || "-"}
+                                </strong>
+                            </div>
+
+                            <div className="consultation-detail-item">
+                                <span>상품 ID</span>
+                                <strong>
+                                    {selectedConsultation.productId ?? "-"}
+                                </strong>
+                            </div>
+
+                            <div className="consultation-detail-item">
+                                <span>상태</span>
+
+                                <strong>
+                                    {selectedConsultation.status === "PENDING"
+                                        ? "접수 대기"
+                                        : selectedConsultation.status === "IN_PROGRESS"
+                                        ? "처리 중"
+                                        : "상담 완료"}
+                                </strong>
+                            </div>
+
+                        </div>
+
+                        <div className="consultation-detail-message">
+                            <span>문의 내용</span>
+
+                            <div>
+                                {selectedConsultation.message ||
+                                    "작성된 문의 내용이 없습니다."}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </main>
     );
 }

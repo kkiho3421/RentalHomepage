@@ -1570,3 +1570,33 @@ select {
         width: 100%;
     }
 }
+
+.consultation-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 28px;
+    padding-top: 20px;
+
+    border-top: 1px solid #eeeeee;
+}
+
+.consultation-delete-button {
+    padding: 11px 18px;
+
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+
+    background: #ffffff;
+    color: #d32f2f;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.consultation-delete-button:hover {
+    background: #fff5f5;
+    border-color: #d32f2f;
+}

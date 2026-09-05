@@ -84,6 +84,47 @@ function AdminConsultations() {
         }
     };
 
+    const handleDeleteConsultation = async (id) => {
+        const confirmed = window.confirm(
+            "정말 이 상담 신청을 삭제하시겠습니까?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `http://localhost:8080/api/consultations/${id}`,
+                {
+                    method: "DELETE",
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    "상담 삭제에 실패했습니다."
+                );
+            }
+
+            setConsultations((prev) =>
+                prev.filter(
+                    (consultation) =>
+                        consultation.id !== id
+                )
+            );
+
+            setSelectedConsultation(null);
+
+        } catch (error) {
+            console.error(error);
+
+            alert(
+                "상담 삭제 중 오류가 발생했습니다."
+            );
+        }
+    };
+
     const filteredConsultations = consultations.filter((consultation) => {
             const matchesStatus =
                 statusFilter === "ALL" ||
@@ -462,6 +503,19 @@ function AdminConsultations() {
                                 {selectedConsultation.message ||
                                     "작성된 문의 내용이 없습니다."}
                             </div>
+                        </div>
+                        <div className="consultation-modal-actions">
+                            <button
+                                type="button"
+                                className="consultation-delete-button"
+                                onClick={() =>
+                                    handleDeleteConsultation(
+                                        selectedConsultation.id
+                                    )
+                                }
+                            >
+                                상담 삭제
+                            </button>
                         </div>
                     </div>
                 </div>

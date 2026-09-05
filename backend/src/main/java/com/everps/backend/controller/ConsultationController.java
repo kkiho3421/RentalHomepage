@@ -3,6 +3,7 @@ package com.everps.backend.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,5 +62,15 @@ public class ConsultationController {
         consultation.setStatus(status);
 
         return consultationRepository.save(consultation);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteConsultation(@PathVariable Long id) {
+        Consultation consultation = consultationRepository.findById(id)
+                .orElseThrow(()
+                        -> new RuntimeException("상담 정보를 찾을 수 없습니다.")
+                );
+
+        consultationRepository.delete(consultation);
     }
 }

@@ -1,111 +1,1196 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
+* {
   margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+  padding: 0;
   box-sizing: border-box;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+html {
+  scroll-behavior: smooth;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+body {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color: #111;
+  background: #fff;
 }
-h2 {
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+select {
+  font-family: inherit;
+}
+
+/* =========================
+   Header
+========================= */
+
+.header {
+  height: 80px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.header-inner {
+  width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
   font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+  font-weight: 800;
+  letter-spacing: -1px;
 }
-p {
+
+.nav {
+  display: flex;
+  gap: 42px;
+}
+
+.nav a {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  color: #555;
+}
+
+.consult-button {
+  border: none;
+  background: #111;
+  color: #fff;
+
+  padding: 12px 22px;
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+/* =========================
+   Hero
+========================= */
+
+.hero {
+  height: 620px;
+
+  background:
+    linear-gradient(90deg,
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.15)),
+    url("https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=1800&q=80");
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+}
+
+.hero-content {
+  width: 1200px;
+  margin: 0 auto;
+  color: #fff;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 58px;
+  line-height: 1.2;
+  letter-spacing: -3px;
+  margin-bottom: 25px;
+}
+
+.hero-description {
+  font-size: 18px;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.hero-button {
+  margin-top: 35px;
+
+  padding: 16px 28px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #fff;
+  color: #111;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =========================
+   Section
+========================= */
+
+.find-section,
+.products-section {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 110px 0;
+}
+
+.section-title {
+  margin-bottom: 40px;
+}
+
+.section-title p {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.section-title h2 {
+  font-size: 36px;
+  letter-spacing: -1.5px;
+}
+
+/* =========================
+   Find
+========================= */
+
+.find-box {
+  display: flex;
+  align-items: end;
+
+  gap: 15px;
+
+  padding: 35px;
+
+  background: #f7f7f7;
+  border-radius: 12px;
+}
+
+.select-item {
+  flex: 1;
+}
+
+.select-item span {
+  display: block;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  margin-bottom: 10px;
+}
+
+.select-item select {
+  width: 100%;
+  height: 50px;
+
+  border: 1px solid #ddd;
+  border-radius: 6px;
+
+  padding: 0 15px;
+
+  background: #fff;
+}
+
+.search-button {
+  height: 50px;
+
+  padding: 0 30px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #111;
+  color: #fff;
+
+  cursor: pointer;
+}
+
+/* =========================
+   Products
+========================= */
+
+.product-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 25px;
+}
+
+.product-card {
+  border: 1px solid #eee;
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  transition: transform 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image {
+  height: 280px;
+
+  background: #f5f5f5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #999;
+}
+
+.product-info {
+  padding: 25px;
+}
+
+.product-info span {
+  font-size: 13px;
+  color: #777;
+}
+
+.product-info h3 {
+  margin: 10px 0 20px;
+
+  font-size: 20px;
+}
+
+.product-info strong {
+  font-size: 18px;
+}
+
+/* =========================
+   Consulting
+========================= */
+
+.consult-section {
+  width: 1200px;
+  margin: 0 auto 110px;
+
+  padding: 70px;
+
+  border-radius: 15px;
+
+  background: #f3f3f3;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.consult-section p {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.consult-section h2 {
+  font-size: 34px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+
+.consult-section span {
+  color: #666;
+}
+
+.consult-section button {
+  padding: 16px 28px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: #111;
+  color: #fff;
+
+  cursor: pointer;
+}
+
+/* =========================
+   Footer
+========================= */
+
+.footer {
+  background: #111;
+  color: #fff;
+
+  padding: 60px 0 30px;
+}
+
+.footer-inner {
+  width: 1200px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-info {
+  color: #aaa;
+  line-height: 1.8;
+  font-size: 13px;
+}
+
+.copyright {
+  width: 1200px;
+  margin: 50px auto 0;
+
+  padding-top: 25px;
+
+  border-top: 1px solid #333;
+
+  color: #666;
+  font-size: 12px;
+}
+
+/* =========================
+   Products Page
+========================= */
+
+.page-header {
+  padding: 100px 0;
+
+  text-align: center;
+
+  background: #f7f7f7;
+}
+
+.page-header p {
+  font-size: 13px;
+  font-weight: 700;
+
+  margin-bottom: 15px;
+}
+
+.page-header h1 {
+  font-size: 48px;
+
+  margin-bottom: 15px;
+
+  letter-spacing: -2px;
+}
+
+.page-header span {
+  color: #777;
+}
+
+/* 상품 영역 */
+
+.products-container {
+  width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 80px 0;
+
+  display: grid;
+
+  grid-template-columns: 220px 1fr;
+
+  gap: 60px;
+}
+
+/* 필터 */
+
+.filter {
+  border-right: 1px solid #eee;
+
+  padding-right: 30px;
+}
+
+.filter h3 {
+  font-size: 20px;
+
+  margin-bottom: 35px;
+}
+
+.filter-group {
+  padding-bottom: 30px;
+
+  margin-bottom: 30px;
+
+  border-bottom: 1px solid #eee;
+}
+
+.filter-group strong {
+  display: block;
+
+  margin-bottom: 20px;
+}
+
+.filter-group label {
+  display: block;
+
+  margin-bottom: 14px;
+
+  font-size: 14px;
+
+  color: #555;
+}
+
+.filter-group input {
+  margin-right: 8px;
+}
+
+/* 상품 상단 */
+
+.products-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 30px;
+}
+
+.products-top span {
+  font-size: 14px;
+
+  color: #555;
+}
+
+.products-top select {
+  width: 120px;
+
+  height: 40px;
+
+  padding: 0 10px;
+
+  border: 1px solid #ddd;
+}
+
+/* 상품 목록 */
+
+.products-list {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 30px;
+}
+
+.products-list .product-card {
+  display: block;
+
+  background: #fff;
+
+  color: inherit;
+
+  text-decoration: none;
+}
+
+.products-list .product-image {
+  height: 300px;
+
+  overflow: hidden;
+
+  background: #f5f5f5;
+}
+
+.products-list .product-image img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.3s;
+}
+
+.products-list .product-card:hover img {
+  transform: scale(1.04);
+}
+
+.products-list .product-info {
+  padding: 20px 5px 10px;
+}
+
+.products-list .product-info span {
+  font-size: 13px;
+
+  color: #777;
+}
+
+.products-list .product-info h3 {
+  font-size: 20px;
+
+  margin: 8px 0;
+}
+
+.products-list .product-info p {
+  font-size: 13px;
+
+  color: #888;
+
+  margin-bottom: 15px;
+
+  line-height: 1.5;
+}
+
+.products-list .product-info strong {
+  font-size: 17px;
+}
+
+/* =========================
+   Product Detail
+========================= */
+
+.product-detail {
+  padding-bottom: 100px;
+}
+
+.detail-container {
+  width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 100px 0;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 80px;
+}
+
+.detail-image {
+  height: 600px;
+
+  background: #f5f5f5;
+
+  overflow: hidden;
+}
+
+.detail-image img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.detail-info {
+  padding-top: 30px;
+}
+
+.detail-category {
+  font-size: 14px;
+
+  color: #777;
+}
+
+.detail-info h1 {
+  font-size: 42px;
+
+  letter-spacing: -2px;
+
+  margin: 15px 0 25px;
+}
+
+.detail-description {
+  color: #777;
+
+  line-height: 1.7;
+
+  margin-bottom: 40px;
+}
+
+.detail-price {
+  padding: 25px 0;
+
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-price span {
+  display: block;
+
+  font-size: 13px;
+
+  color: #777;
+
+  margin-bottom: 8px;
+}
+
+.detail-price strong {
+  font-size: 30px;
+}
+
+.detail-spec {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 10px;
+
+  margin: 30px 0;
+}
+
+.detail-spec div {
+  padding: 18px;
+
+  background: #f7f7f7;
+}
+
+.detail-spec span {
+  display: block;
+
+  font-size: 12px;
+
+  color: #888;
+
+  margin-bottom: 8px;
+}
+
+.detail-spec strong {
+  font-size: 14px;
+}
+
+.consult-detail-button {
+  width: 100%;
+
+  height: 60px;
+
+  border: none;
+
+  background: #111;
+
+  color: #fff;
+
+  border-radius: 6px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+.detail-description-section {
+  width: 1200px;
+
+  margin: 0 auto;
+
+  padding-top: 70px;
+
+  border-top: 1px solid #eee;
+}
+
+.detail-description-section h2 {
+  font-size: 28px;
+
+  margin-bottom: 20px;
+}
+
+.detail-description-section p {
+  color: #777;
+}
+
+/* =========================
+   Not Found
+========================= */
+
+.not-found {
+  min-height: 500px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+/* =========================
+   Product Image
+========================= */
+
+.product-grid .product-image {
+  overflow: hidden;
+}
+
+.product-grid .product-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.3s;
+}
+
+.product-grid .product-card:hover img {
+  transform: scale(1.04);
+}
+
+/* =========================
+   No Products
+========================= */
+
+.no-products {
+  min-height: 300px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  text-align: center;
+}
+
+.no-products h3 {
+  font-size: 22px;
+
+  margin-bottom: 10px;
+}
+
+.no-products p {
+  color: #888;
+}
+
+/* =========================
+   Filter Header
+========================= */
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 35px;
+}
+
+.filter-header h3 {
+  margin-bottom: 0;
+}
+
+.reset-button {
+  border: none;
+
+  background: none;
+
+  color: #888;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.reset-button:hover {
+  color: #111;
+}
+
+
+/* =========================
+   Filter Radio
+========================= */
+
+.filter-group input[type="radio"] {
+  margin-right: 8px;
+}
+
+
+/* =========================
+   Product Top
+========================= */
+
+.products-top strong {
+  color: #111;
+
+  font-weight: 700;
+}
+
+
+/* =========================
+   Reset Products Button
+========================= */
+
+.reset-products-button {
+  margin-top: 25px;
+
+  padding: 12px 24px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  background: #111;
+
+  color: #fff;
+
+  cursor: pointer;
+}
+
+.reset-products-button:hover {
+  background: #333;
+}
+
+/* =========================
+   Consultation
+========================= */
+
+.consultation-page {
+  padding-bottom: 100px;
+}
+
+
+/* 상담 헤더 */
+
+.consultation-header {
+  padding: 100px 20px;
+
+  text-align: center;
+
+  background: #f7f7f7;
+}
+
+.consultation-header p {
+  font-size: 13px;
+
+  font-weight: 700;
+
+  margin-bottom: 15px;
+}
+
+.consultation-header h1 {
+  font-size: 48px;
+
+  letter-spacing: -2px;
+
+  margin-bottom: 15px;
+}
+
+.consultation-header span {
+  color: #777;
+}
+
+
+/* 상담 영역 */
+
+.consultation-container {
+  width: 900px;
+
+  margin: 0 auto;
+
+  padding: 80px 0;
+}
+
+
+/* 선택 상품 */
+
+.consultation-product {
+  display: flex;
+
+  align-items: center;
+
+  gap: 30px;
+
+  padding: 25px;
+
+  margin-bottom: 40px;
+
+  border: 1px solid #eee;
+
+  border-radius: 10px;
+}
+
+.consultation-product-image {
+  width: 140px;
+
+  height: 140px;
+
+  overflow: hidden;
+
+  background: #f5f5f5;
+}
+
+.consultation-product-image img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.consultation-product-info span {
+  display: block;
+
+  color: #777;
+
+  font-size: 13px;
+
+  margin-bottom: 8px;
+}
+
+.consultation-product-info h2 {
+  font-size: 24px;
+
+  margin-bottom: 15px;
+}
+
+.consultation-product-info strong {
+  font-size: 18px;
+}
+
+
+/* 상담 폼 */
+
+.consultation-form {
+  padding: 45px;
+
+  border: 1px solid #eee;
+
+  border-radius: 10px;
+}
+
+.consultation-form h2 {
+  font-size: 26px;
+
+  margin-bottom: 10px;
+}
+
+.form-description {
+  color: #777;
+
+  font-size: 14px;
+
+  margin-bottom: 40px;
+}
+
+
+/* 입력 */
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  margin-bottom: 10px;
+}
+
+.form-group label span {
+  color: #e53935;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+
+  border: 1px solid #ddd;
+
+  border-radius: 6px;
+
+  padding: 14px 15px;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition: border-color 0.2s;
+
+  font-family: inherit;
+}
+
+.form-group input {
+  height: 50px;
+}
+
+.form-group textarea {
+  resize: vertical;
+
+  line-height: 1.6;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #111;
+}
+
+
+/* 개인정보 */
+
+.privacy-box {
+  padding: 20px;
+
+  margin-top: 10px;
+
+  margin-bottom: 25px;
+
+  background: #f7f7f7;
+
+  border-radius: 6px;
+}
+
+.privacy-box label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-size: 13px;
+
+  color: #555;
+}
+
+.privacy-box input {
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+
+/* 신청 버튼 */
+
+.consultation-submit {
+  width: 100%;
+
+  height: 60px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  background: #111;
+
+  color: #fff;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.consultation-submit:hover {
+  background: #333;
+}
+
+
+/* =========================
+   Consultation Complete
+========================= */
+
+.consultation-complete {
+  width: 700px;
+
+  margin: 0 auto;
+
+  padding: 150px 20px;
+
+  text-align: center;
+}
+
+.complete-icon {
+  width: 70px;
+
+  height: 70px;
+
+  margin: 0 auto 30px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #111;
+
+  color: #fff;
+
+  font-size: 30px;
+}
+
+.consultation-complete>p {
+  font-size: 13px;
+
+  font-weight: 700;
+
+  margin-bottom: 15px;
+}
+
+.consultation-complete h1 {
+  font-size: 38px;
+
+  letter-spacing: -1.5px;
+
+  margin-bottom: 15px;
+}
+
+.consultation-complete>span {
+  color: #777;
+
+  font-size: 14px;
+}
+
+.complete-product {
+  margin: 40px 0;
+
+  padding: 25px;
+
+  background: #f7f7f7;
+
+  border-radius: 8px;
+}
+
+.complete-product span {
+  display: block;
+
+  font-size: 13px;
+
+  color: #777;
+
+  margin-bottom: 8px;
+}
+
+.complete-product strong {
+  font-size: 18px;
+}
+
+.back-products-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  height: 50px;
+
+  padding: 0 25px;
+
+  background: #111;
+
+  color: #fff;
+
+  border-radius: 6px;
 }

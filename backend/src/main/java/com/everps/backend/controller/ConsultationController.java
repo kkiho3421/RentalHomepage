@@ -1,5 +1,7 @@
 package com.everps.backend.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -13,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.everps.backend.dto.ConsultationRequest;
 import com.everps.backend.entity.Consultation;
 import com.everps.backend.repository.ConsultationRepository;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/consultations")
@@ -47,7 +47,7 @@ public class ConsultationController {
 
     @GetMapping
     public List<Consultation> getConsultations() {
-        return consultationRepository.findAll();
+        return consultationRepository.findAllByOrderByCreatedAtDesc();
     }
 
     @PatchMapping("/{id}/status")

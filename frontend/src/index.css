@@ -1600,3 +1600,72 @@ select {
     background: #fff5f5;
     border-color: #d32f2f;
 }
+
+.admin-summary-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 24px;
+}
+
+.admin-summary-card {
+    padding: 22px;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: all 0.15s ease;
+}
+
+.admin-summary-card:hover {
+    transform: translateY(-2px);
+    border-color: #bbbbbb;
+}
+
+.admin-summary-card.active {
+    border-color: #111111;
+    box-shadow: 0 0 0 1px #111111;
+}
+
+.admin-summary-card span {
+    display: block;
+
+    margin-bottom: 12px;
+
+    font-size: 13px;
+    color: #777777;
+}
+
+.admin-summary-card strong {
+    font-size: 28px;
+    font-weight: 700;
+
+    color: #111111;
+}
+
+.admin-summary-card small {
+    margin-left: 4px;
+
+    font-size: 13px;
+    color: #777777;
+}
+
+@media (max-width: 800px) {
+    .admin-summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .admin-summary-cards {
+        grid-template-columns: 1fr;
+    }
+}

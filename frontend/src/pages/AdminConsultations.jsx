@@ -125,6 +125,18 @@ function AdminConsultations() {
         }
     };
 
+    const pendingCount = consultations.filter(
+        (consultation) => consultation.status === "PENDING"
+    ).length;
+
+    const inProgressCount = consultations.filter(
+        (consultation) => consultation.status === "IN_PROGRESS"
+    ).length;
+
+    const completedCount = consultations.filter(
+        (consultation) => consultation.status === "COMPLETED"
+    ).length;
+
     const filteredConsultations = consultations.filter((consultation) => {
             const matchesStatus =
                 statusFilter === "ALL" ||
@@ -195,15 +207,55 @@ function AdminConsultations() {
 
             <section className="admin-consultations-container">
 
-                <div className="admin-consultations-summary">
+                <div className="admin-summary-cards">
 
-                    총 상담 신청
+                    <button
+                        type="button"
+                        className={`admin-summary-card ${
+                            statusFilter === "ALL" ? "active" : ""
+                        }`}
+                        onClick={() => setStatusFilter("ALL")}
+                    >
+                        <span>전체 상담</span>
+                        <strong>{consultations.length}</strong>
+                        <small>건</small>
+                    </button>
 
-                    <strong>
-                        {consultations.length}
-                    </strong>
+                    <button
+                        type="button"
+                        className={`admin-summary-card ${
+                            statusFilter === "PENDING" ? "active" : ""
+                        }`}
+                        onClick={() => setStatusFilter("PENDING")}
+                    >
+                        <span>접수 대기</span>
+                        <strong>{pendingCount}</strong>
+                        <small>건</small>
+                    </button>
 
-                    건
+                    <button
+                        type="button"
+                        className={`admin-summary-card ${
+                            statusFilter === "IN_PROGRESS" ? "active" : ""
+                        }`}
+                        onClick={() => setStatusFilter("IN_PROGRESS")}
+                    >
+                        <span>처리 중</span>
+                        <strong>{inProgressCount}</strong>
+                        <small>건</small>
+                    </button>
+
+                    <button
+                        type="button"
+                        className={`admin-summary-card ${
+                            statusFilter === "COMPLETED" ? "active" : ""
+                        }`}
+                        onClick={() => setStatusFilter("COMPLETED")}
+                    >
+                        <span>상담 완료</span>
+                        <strong>{completedCount}</strong>
+                        <small>건</small>
+                    </button>
 
                 </div>
                 <div className="admin-consultations-tools">

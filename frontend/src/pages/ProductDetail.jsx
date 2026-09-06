@@ -27,6 +27,12 @@ function ProductDetail() {
 
                 const data = await response.json();
 
+                if (!data.visible) {
+                    setProduct(null);
+                    setError("현재 노출되지 않는 상품입니다.");
+                    return;
+                }
+                
                 setProduct(data);
 
             } catch (error) {

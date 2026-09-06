@@ -52,7 +52,7 @@ function AdminConsultations() {
         const fetchProducts = async () => {
             try {
                 const response = await adminFetch(
-                    "http://localhost:8080/api/products"
+                    "http://localhost:8080/api/admin/products"
                 );
 
                 if (!response.ok) {

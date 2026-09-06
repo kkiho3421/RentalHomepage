@@ -63,6 +63,7 @@ public class ProductController {
         product.setImage(request.getImage());
         product.setFeatured(request.getFeatured());
         product.setDisplayOrder(request.getDisplayOrder());
+        product.setVisible(request.getVisible());
 
         return productRepository.save(product);
     }

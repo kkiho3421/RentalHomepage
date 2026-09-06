@@ -186,6 +186,11 @@ function Products() {
     const filteredProducts = products.filter(
         (product) => {
 
+            // 홈페이지 노출 여부
+            if (!product.visible) {
+                return false;
+            }
+
             // 제품 종류
             const typeMatch =
                 selectedTypes.length === 0 ||

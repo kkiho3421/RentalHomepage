@@ -14,23 +14,17 @@ public class Product {
     private String type;
     private String color;
     private String paper;
-
     private String monthlyPrint;
     private String printRange;
-
     private String name;
-
     @Column(columnDefinition = "TEXT")
     private String description;
-
     private Integer price;
-
     @Column(columnDefinition = "TEXT")
     private String image;
-
     private Boolean featured = false;
-
     private Integer displayOrder = 0;
+    private Boolean visible = true;
 
     public Product() {
     }
@@ -137,5 +131,13 @@ public class Product {
 
     public void setDisplayOrder(Integer displayOrder) {
         this.displayOrder = displayOrder;
+    }
+
+    public Boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 }

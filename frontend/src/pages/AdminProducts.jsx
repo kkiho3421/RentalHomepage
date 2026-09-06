@@ -27,13 +27,14 @@ function AdminProducts() {
         image: "",
         featured: false,
         displayOrder: 0,
+        visible: true,
     });
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const response = await adminFetch(
-                    "http://localhost:8080/api/products"
+                    "http://localhost:8080/api/admin/products"
                 );
 
                 if (!response.ok) {
@@ -136,6 +137,7 @@ function AdminProducts() {
                 image: "",
                 featured: false,
                 displayOrder: 0,
+                visible: true,
             });
 
             setSelectedImageFile(null);
@@ -583,6 +585,18 @@ function AdminProducts() {
                                 </label>
                             </div>
 
+                            <div>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        name="visible"
+                                        checked={newProduct.visible}
+                                        onChange={handleNewProductChange}
+                                    />
+                                    홈페이지에 상품 노출
+                                </label>
+                            </div>
+
                             <div className="admin-product-form-full">
                                 <label>상품 이미지</label>
 
@@ -771,6 +785,18 @@ function AdminProducts() {
                                         onChange={handleEditProductChange}
                                     />
                                     메인 추천상품으로 노출
+                                </label>
+                            </div>
+
+                            <div>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        name="visible"
+                                        checked={editingProduct.visible}
+                                        onChange={handleEditProductChange}
+                                    />
+                                    홈페이지에 상품 노출
                                 </label>
                             </div>
 

@@ -179,7 +179,11 @@ function Home() {
                 <div className="product-grid">
 
                     {products
-                        .filter((product) => product.featured)
+                        .filter(
+                            (product) =>
+                                product.visible &&
+                                product.featured
+                        )
                         .sort((a, b) => a.displayOrder - b.displayOrder)
                         .map((product) => (
 

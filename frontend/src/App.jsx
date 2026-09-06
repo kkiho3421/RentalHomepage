@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import MainLayout from "./layouts/MainLayout";
+import AdminLayout from "./layouts/AdminLayout";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 
 import Home from "./pages/Home";
@@ -11,60 +11,74 @@ import Consultation from "./pages/Consultation";
 import AdminConsultations from "./pages/AdminConsultations";
 import AdminLogin from "./pages/AdminLogin";
 import AdminProducts from "./pages/AdminProducts";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   return (
     <BrowserRouter>
 
-      <Header />
-
       <Routes>
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
+        {/* 일반 홈페이지 */}
+        <Route element={<MainLayout />}>
 
-        <Route
-          path="/products"
-          element={<Products />}
-        />
+          <Route
+            path="/"
+            element={<Home />}
+          />
 
-        <Route
-          path="/products/:id"
-          element={<ProductDetail />}
-        />
+          <Route
+            path="/products"
+            element={<Products />}
+          />
 
-        <Route
-          path="/consultation"
-          element={<Consultation />}
-        />
+          <Route
+            path="/products/:id"
+            element={<ProductDetail />}
+          />
 
-        <Route
-          path="/admin/consultations"
-          element={
-              <ProtectedAdminRoute>
-                  <AdminConsultations />
-              </ProtectedAdminRoute>
-          }
-        />
+          <Route
+            path="/consultation"
+            element={<Consultation />}
+          />
 
-        <Route
-          path="/admin/products"
-          element={
-              <ProtectedAdminRoute>
-                  <AdminProducts />
-              </ProtectedAdminRoute>
-          }
-        />
+        </Route>
 
+
+        {/* 관리자 로그인 */}
         <Route
           path="/admin/login"
           element={<AdminLogin />}
         />
-      </Routes>
 
-      <Footer />
+
+        {/* 관리자 페이지 */}
+        <Route
+          element={
+            <ProtectedAdminRoute>
+              <AdminLayout />
+            </ProtectedAdminRoute>
+          }
+        >
+          
+          <Route
+            path="/admin"
+            element={<AdminDashboard />}
+          />
+
+          <Route
+            path="/admin/products"
+            element={<AdminProducts />}
+          />
+
+          <Route
+            path="/admin/consultations"
+            element={<AdminConsultations />}
+          />
+
+        </Route>
+
+      </Routes>
 
     </BrowserRouter>
   );

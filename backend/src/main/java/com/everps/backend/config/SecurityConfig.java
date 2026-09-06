@@ -1,5 +1,6 @@
 package com.everps.backend.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -35,7 +36,7 @@ public class SecurityConfig {
                 .cors(cors -> {
                 })
                 .authorizeHttpRequests(auth -> auth
-                //로그인 API
+                // 로그인 API
                 .requestMatchers(
                         "/api/auth/login"
                 ).permitAll()
@@ -57,6 +58,15 @@ public class SecurityConfig {
                 ).permitAll()
                 // 나머지는 로그인 필요
                 .anyRequest().authenticated()
+                )
+                .exceptionHandling(exception -> exception
+                .authenticationEntryPoint(
+                        (request, response, authException) -> {
+                            response.sendError(
+                                    HttpServletResponse.SC_UNAUTHORIZED
+                            );
+                        }
+                )
                 )
                 .formLogin(form
                         -> form.disable()

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { adminFetch } from "../utils/adminFetch";
 
 function AdminConsultations() {
     const [consultations, setConsultations] = useState([]);
@@ -13,11 +14,8 @@ function AdminConsultations() {
     useEffect(() => {
         const fetchConsultations = async () => {
             try {
-                const response = await fetch(
-                    "http://localhost:8080/api/consultations",
-                    {
-                        credentials: "include",
-                    }
+                const response = await adminFetch(
+                    "http://localhost:8080/api/consultations"
                 );
 
                 if (!response.ok) {
@@ -31,6 +29,10 @@ function AdminConsultations() {
                 setConsultations(data);
 
             } catch (error) {
+                if (error.isUnauthorized) {
+                    return;
+                }
+
                 console.error(error);
 
                 setError(
@@ -49,11 +51,8 @@ function AdminConsultations() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch(
-                    "http://localhost:8080/api/products",
-                    {
-                        credentials: "include",
-                    }
+                const response = await adminFetch(
+                    "http://localhost:8080/api/products"
                 );
 
                 if (!response.ok) {
@@ -67,6 +66,10 @@ function AdminConsultations() {
                 setProducts(data);
 
             } catch (error) {
+                if (error.isUnauthorized) {
+                    return;
+                }
+
                 console.error(
                     "상품 목록 조회 오류:",
                     error
@@ -79,11 +82,10 @@ function AdminConsultations() {
     
     const handleStatusChange = async (id, newStatus) => {
         try {
-            const response = await fetch(
+            const response = await adminFetch(
                 `http://localhost:8080/api/consultations/${id}/status?status=${newStatus}`,
                 {
                     method: "PATCH",
-                    credentials: "include",
                 }
             );
 
@@ -111,6 +113,10 @@ function AdminConsultations() {
             );
 
         } catch (error) {
+            if (error.isUnauthorized) {
+                return;
+            }
+            
             console.error(error);
 
             alert(
@@ -129,11 +135,10 @@ function AdminConsultations() {
         }
 
         try {
-            const response = await fetch(
+            const response = await adminFetch(
                 `http://localhost:8080/api/consultations/${id}`,
                 {
                     method: "DELETE",
-                    credentials: "include",
                 }
             );
 
@@ -153,6 +158,10 @@ function AdminConsultations() {
             setSelectedConsultation(null);
 
         } catch (error) {
+            if (error.isUnauthorized) {
+                return;
+            }
+
             console.error(error);
 
             alert(

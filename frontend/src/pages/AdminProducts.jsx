@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getProductImageUrl } from "../utils/imageUrl";
+import { adminFetch } from "../utils/adminFetch";
 
 function AdminProducts() {
     const [products, setProducts] = useState([]);
@@ -29,11 +30,8 @@ function AdminProducts() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch(
-                    "http://localhost:8080/api/products",
-                    {
-                        credentials: "include",
-                    }
+                const response = await adminFetch(
+                    "http://localhost:8080/api/products"
                 );
 
                 if (!response.ok) {
@@ -47,6 +45,10 @@ function AdminProducts() {
                 setProducts(data);
 
             } catch (error) {
+                if (error.isUnauthorized) {
+                    return;
+                }
+
                 console.error(error);
 
                 setError(
@@ -89,14 +91,13 @@ function AdminProducts() {
                 imageUrl = await uploadProductImage();
             }
             
-            const response = await fetch(
+            const response = await adminFetch(
                 "http://localhost:8080/api/products",
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    credentials: "include",
                     body: JSON.stringify({
                         ...newProduct,
                         image: imageUrl,
@@ -138,6 +139,10 @@ function AdminProducts() {
             setShowAddForm(false);
 
         } catch (error) {
+            if (error.isUnauthorized) {
+                return;
+            }
+
             console.error(error);
 
             alert(
@@ -169,11 +174,10 @@ function AdminProducts() {
                     editImageFile
                 );
 
-                const imageResponse = await fetch(
+                const imageResponse = await adminFetch(
                     "http://localhost:8080/api/uploads/product-image",
                     {
                         method: "POST",
-                        credentials: "include",
                         body: formData,
                     }
                 );
@@ -190,14 +194,13 @@ function AdminProducts() {
                 imageUrl = imageData.imageUrl;
             }
 
-            const response = await fetch(
+            const response = await adminFetch(
                 `http://localhost:8080/api/products/${editingProduct.id}`,
                 {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    credentials: "include",
                     body: JSON.stringify({
                         ...editingProduct,
                         image: imageUrl,
@@ -228,6 +231,10 @@ function AdminProducts() {
             setEditImagePreview("");
 
         } catch (error) {
+            if (error.isUnauthorized) {
+                return;
+            }
+
             console.error(error);
 
             alert(
@@ -246,11 +253,10 @@ function AdminProducts() {
         }
 
         try {
-            const response = await fetch(
+            const response = await adminFetch(
                 `http://localhost:8080/api/products/${product.id}`,
                 {
                     method: "DELETE",
-                    credentials: "include",
                 }
             );
 
@@ -267,6 +273,10 @@ function AdminProducts() {
             );
 
         } catch (error) {
+            if (error.isUnauthorized) {
+                return;
+            }
+            
             console.error(error);
 
             alert(
@@ -311,11 +321,10 @@ function AdminProducts() {
                 selectedImageFile
             );
 
-            const response = await fetch(
+            const response = await adminFetch(
                 "http://localhost:8080/api/uploads/product-image",
                 {
                     method: "POST",
-                    credentials: "include",
                     body: formData,
                 }
             );

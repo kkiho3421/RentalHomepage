@@ -30,7 +30,10 @@ function AdminProducts() {
         const fetchProducts = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:8080/api/products"
+                    "http://localhost:8080/api/products",
+                    {
+                        credentials: "include",
+                    }
                 );
 
                 if (!response.ok) {
@@ -93,6 +96,7 @@ function AdminProducts() {
                     headers: {
                         "Content-Type": "application/json",
                     },
+                    credentials: "include",
                     body: JSON.stringify({
                         ...newProduct,
                         image: imageUrl,
@@ -169,6 +173,7 @@ function AdminProducts() {
                     "http://localhost:8080/api/uploads/product-image",
                     {
                         method: "POST",
+                        credentials: "include",
                         body: formData,
                     }
                 );
@@ -192,6 +197,7 @@ function AdminProducts() {
                     headers: {
                         "Content-Type": "application/json",
                     },
+                    credentials: "include",
                     body: JSON.stringify({
                         ...editingProduct,
                         image: imageUrl,
@@ -244,6 +250,7 @@ function AdminProducts() {
                 `http://localhost:8080/api/products/${product.id}`,
                 {
                     method: "DELETE",
+                    credentials: "include",
                 }
             );
 
@@ -308,6 +315,7 @@ function AdminProducts() {
                 "http://localhost:8080/api/uploads/product-image",
                 {
                     method: "POST",
+                    credentials: "include",
                     body: formData,
                 }
             );

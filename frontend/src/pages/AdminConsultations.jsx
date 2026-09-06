@@ -14,7 +14,10 @@ function AdminConsultations() {
         const fetchConsultations = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:8080/api/consultations"
+                    "http://localhost:8080/api/consultations",
+                    {
+                        credentials: "include",
+                    }
                 );
 
                 if (!response.ok) {
@@ -47,7 +50,10 @@ function AdminConsultations() {
         const fetchProducts = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:8080/api/products"
+                    "http://localhost:8080/api/products",
+                    {
+                        credentials: "include",
+                    }
                 );
 
                 if (!response.ok) {
@@ -77,6 +83,7 @@ function AdminConsultations() {
                 `http://localhost:8080/api/consultations/${id}/status?status=${newStatus}`,
                 {
                     method: "PATCH",
+                    credentials: "include",
                 }
             );
 
@@ -126,6 +133,7 @@ function AdminConsultations() {
                 `http://localhost:8080/api/consultations/${id}`,
                 {
                     method: "DELETE",
+                    credentials: "include",
                 }
             );
 

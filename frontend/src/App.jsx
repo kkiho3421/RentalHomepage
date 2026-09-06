@@ -2,13 +2,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
 
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Consultation from "./pages/Consultation";
 import AdminConsultations from "./pages/AdminConsultations";
-
+import AdminLogin from "./pages/AdminLogin";
 import AdminProducts from "./pages/AdminProducts";
 
 function App() {
@@ -41,12 +42,25 @@ function App() {
 
         <Route
           path="/admin/consultations"
-          element={<AdminConsultations />}
+          element={
+              <ProtectedAdminRoute>
+                  <AdminConsultations />
+              </ProtectedAdminRoute>
+          }
         />
 
         <Route
           path="/admin/products"
-          element={<AdminProducts />}
+          element={
+              <ProtectedAdminRoute>
+                  <AdminProducts />
+              </ProtectedAdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/login"
+          element={<AdminLogin />}
         />
       </Routes>
 

@@ -1940,3 +1940,66 @@ select {
     border-radius: 8px;
     background: #fff;
 }
+
+.admin-login-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.admin-login-box {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.admin-login-label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.admin-login-box h1 {
+    margin-bottom: 30px;
+}
+
+.admin-login-box form > div {
+    margin-bottom: 20px;
+}
+
+.admin-login-box label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.admin-login-box input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.admin-login-box button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.admin-login-box button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.admin-login-error {
+    margin-bottom: 20px;
+    font-size: 14px;
+}

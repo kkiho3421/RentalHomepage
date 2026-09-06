@@ -993,3 +993,21 @@
     text-align: center;
     color: #777;
 }
+
+/* 상품 추천 여부 체크박스 */
+.admin-product-form-grid input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    margin: 0 8px 0 0;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.admin-product-form-grid label:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 8px;
+    cursor: pointer;
+}

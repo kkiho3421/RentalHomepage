@@ -28,6 +28,10 @@ public class Product {
     @Column(columnDefinition = "TEXT")
     private String image;
 
+    private Boolean featured = false;
+
+    private Integer displayOrder = 0;
+
     public Product() {
     }
 
@@ -117,5 +121,21 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Boolean getFeatured() {
+        return featured;
+    }
+
+    public void setFeatured(Boolean featured) {
+        this.featured = featured;
+    }
+
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(Integer displayOrder) {
+        this.displayOrder = displayOrder;
     }
 }

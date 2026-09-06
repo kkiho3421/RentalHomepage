@@ -25,6 +25,8 @@ function AdminProducts() {
         description: "",
         price: "",
         image: "",
+        featured: false,
+        displayOrder: 0,
     });
 
     useEffect(() => {
@@ -73,11 +75,11 @@ function AdminProducts() {
     }, [editingProduct?.id]);
 
     const handleNewProductChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
 
         setNewProduct((prev) => ({
             ...prev,
-            [name]: value,
+            [name]: type === "checkbox" ? checked : value,
         }));
     };
 
@@ -102,6 +104,7 @@ function AdminProducts() {
                         ...newProduct,
                         image: imageUrl,
                         price: Number(newProduct.price),
+                        displayOrder: Number(newProduct.displayOrder),
                     }),
                 }
             );
@@ -131,6 +134,8 @@ function AdminProducts() {
                 description: "",
                 price: "",
                 image: "",
+                featured: false,
+                displayOrder: 0,
             });
 
             setSelectedImageFile(null);
@@ -152,11 +157,11 @@ function AdminProducts() {
     };
 
     const handleEditProductChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
 
         setEditingProduct((prev) => ({
             ...prev,
-            [name]: value,
+            [name]: type === "checkbox" ? checked : value,
         }));
     };
 
@@ -205,6 +210,7 @@ function AdminProducts() {
                         ...editingProduct,
                         image: imageUrl,
                         price: Number(editingProduct.price),
+                        displayOrder: Number(editingProduct.displayOrder),
                     }),
                 }
             );
@@ -276,7 +282,7 @@ function AdminProducts() {
             if (error.isUnauthorized) {
                 return;
             }
-            
+
             console.error(error);
 
             alert(
@@ -554,6 +560,29 @@ function AdminProducts() {
                                 />
                             </div>
 
+                            <div>
+                                <label>표시 순서</label>
+                                <input
+                                    type="number"
+                                    name="displayOrder"
+                                    value={newProduct.displayOrder}
+                                    onChange={handleNewProductChange}
+                                    min="0"
+                                />
+                            </div>
+
+                            <div>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        name="featured"
+                                        checked={newProduct.featured}
+                                        onChange={handleNewProductChange}
+                                    />
+                                    메인 추천상품으로 노출
+                                </label>
+                            </div>
+
                             <div className="admin-product-form-full">
                                 <label>상품 이미지</label>
 
@@ -720,6 +749,29 @@ function AdminProducts() {
                                     onChange={handleEditProductChange}
                                     required
                                 />
+                            </div>
+
+                            <div>
+                                <label>표시 순서</label>
+                                <input
+                                    type="number"
+                                    name="displayOrder"
+                                    value={editingProduct.displayOrder ?? 0}
+                                    onChange={handleEditProductChange}
+                                    min="0"
+                                />
+                            </div>
+
+                            <div>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        name="featured"
+                                        checked={editingProduct.featured ?? false}
+                                        onChange={handleEditProductChange}
+                                    />
+                                    메인 추천상품으로 노출
+                                </label>
                             </div>
 
                             <div className="admin-product-form-full">

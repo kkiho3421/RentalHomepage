@@ -178,7 +178,10 @@ function Home() {
 
                 <div className="product-grid">
 
-                    {products.slice(0, 3).map((product) => (
+                    {products
+                        .filter((product) => product.featured)
+                        .sort((a, b) => a.displayOrder - b.displayOrder)
+                        .map((product) => (
 
                         <Link
                             to={`/products/${product.id}`}

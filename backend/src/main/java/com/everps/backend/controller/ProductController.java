@@ -61,6 +61,8 @@ public class ProductController {
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
         product.setImage(request.getImage());
+        product.setFeatured(request.getFeatured());
+        product.setDisplayOrder(request.getDisplayOrder());
 
         return productRepository.save(product);
     }

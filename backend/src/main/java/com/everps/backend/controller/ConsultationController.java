@@ -86,7 +86,8 @@ public class ConsultationController {
             @RequestBody Map<String, String> request
     ) {
         Consultation consultation = consultationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(
+                .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
                 "상담 정보를 찾을 수 없습니다."
         ));
 
@@ -100,9 +101,10 @@ public class ConsultationController {
     @DeleteMapping("/{id}")
     public void deleteConsultation(@PathVariable Long id) {
         Consultation consultation = consultationRepository.findById(id)
-                .orElseThrow(()
-                        -> new RuntimeException("상담 정보를 찾을 수 없습니다.")
-                );
+                .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "상담 정보를 찾을 수 없습니다."
+        ));
 
         consultationRepository.delete(consultation);
     }

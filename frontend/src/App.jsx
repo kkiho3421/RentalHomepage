@@ -12,6 +12,7 @@ import AdminConsultations from "./pages/AdminConsultations";
 import AdminLogin from "./pages/AdminLogin";
 import AdminProducts from "./pages/AdminProducts";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminPassword from "./pages/AdminPassword";
 
 function App() {
   return (
@@ -74,6 +75,11 @@ function App() {
           <Route
             path="/admin/consultations"
             element={<AdminConsultations />}
+          />
+
+          <Route
+            path="/admin/password"
+            element={<AdminPassword />}
           />
 
         </Route>

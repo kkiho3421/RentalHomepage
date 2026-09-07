@@ -48,7 +48,7 @@ function AdminHeader() {
                     >
                         대시보드
                     </NavLink>
-                    
+
                     <NavLink
                         to="/admin/products"
                         className={({ isActive }) =>
@@ -56,6 +56,15 @@ function AdminHeader() {
                         }
                     >
                         상품 관리
+                    </NavLink>
+
+                    <NavLink
+                        to="/admin/password"
+                        className={({ isActive }) =>
+                            isActive ? "active" : ""
+                        }
+                    >
+                        비밀번호 변경
                     </NavLink>
 
                     <NavLink

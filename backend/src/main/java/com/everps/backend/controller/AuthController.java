@@ -1,6 +1,10 @@
 package com.everps.backend.controller;
 
 import com.everps.backend.dto.LoginRequest;
+import com.everps.backend.dto.PasswordChangeRequest;
+
+import com.everps.backend.entity.Admin;
+import com.everps.backend.repository.AdminRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -14,8 +18,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
@@ -24,12 +30,17 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
+    private final AdminRepository adminRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public AuthController(
-            AuthenticationManager authenticationManager
+            AuthenticationManager authenticationManager,
+            AdminRepository adminRepository,
+            PasswordEncoder passwordEncoder
     ) {
-        this.authenticationManager
-                = authenticationManager;
+        this.authenticationManager = authenticationManager;
+        this.adminRepository = adminRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/login")
@@ -109,8 +120,63 @@ public class AuthController {
         return ResponseEntity.ok(
                 Map.of(
                         "message",
-                        "로그아웃되었습니다."
+                        "로그아웃되었습니다."));
+    }
+
+    @PatchMapping("/password")
+    public void changePassword(
+            @RequestBody PasswordChangeRequest request,
+            Authentication authentication
+    ) {
+        if (authentication == null
+                || !authentication.isAuthenticated()) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "로그인이 필요합니다."
+            );
+        }
+
+        Admin admin = adminRepository
+                .findByUsername(authentication.getName())
+                .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "관리자 정보를 찾을 수 없습니다."
+        ));
+
+        if (!passwordEncoder.matches(
+                request.getCurrentPassword(),
+                admin.getPassword()
+        )) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "현재 비밀번호가 일치하지 않습니다."
+            );
+        }
+
+        if (request.getNewPassword() == null
+                || request.getNewPassword().length() < 8) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "새 비밀번호는 8자 이상이어야 합니다."
+            );
+        }
+
+        if (passwordEncoder.matches(
+                request.getNewPassword(),
+                admin.getPassword()
+        )) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "새 비밀번호는 현재 비밀번호와 달라야 합니다."
+            );
+        }
+
+        admin.setPassword(
+                passwordEncoder.encode(
+                        request.getNewPassword()
                 )
         );
+
+        adminRepository.save(admin);
     }
 }

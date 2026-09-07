@@ -1095,3 +1095,105 @@
     cursor: not-allowed;
     opacity: 0.6;
 }
+
+.admin-password-page {
+    padding: 40px;
+}
+
+.admin-password-card {
+    max-width: 520px;
+    padding: 32px;
+
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.admin-password-card h1 {
+    margin: 0 0 8px;
+
+    font-size: 26px;
+}
+
+.admin-password-description {
+    margin: 0 0 28px;
+
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.admin-password-field {
+    margin-bottom: 20px;
+}
+
+.admin-password-field label {
+    display: block;
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.admin-password-field input {
+    width: 100%;
+    padding: 11px 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.admin-password-field input:focus {
+    outline: none;
+    border-color: #555;
+}
+
+.admin-password-field span {
+    display: block;
+    margin-top: 6px;
+
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.admin-password-error {
+    margin-bottom: 16px;
+    padding: 10px 12px;
+
+    background: #fef2f2;
+    border-radius: 6px;
+
+    color: #b91c1c;
+    font-size: 13px;
+}
+
+.admin-password-success {
+    margin-bottom: 16px;
+    padding: 10px 12px;
+
+    background: #ecfdf3;
+    border-radius: 6px;
+
+    color: #16803c;
+    font-size: 13px;
+}
+
+.admin-password-submit {
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.admin-password-submit:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}

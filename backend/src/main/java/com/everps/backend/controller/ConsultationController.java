@@ -1,6 +1,7 @@
 package com.everps.backend.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,6 +59,24 @@ public class ConsultationController {
                 .orElseThrow(() -> new RuntimeException("상담 정보를 찾을 수 없습니다."));
 
         consultation.setStatus(status);
+
+        return consultationRepository.save(consultation);
+    }
+
+    // 관리자 메모 수정
+    @PatchMapping("/{id}/memo")
+    public Consultation updateMemo(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> request
+    ) {
+        Consultation consultation = consultationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(
+                "상담 정보를 찾을 수 없습니다."
+        ));
+
+        consultation.setAdminMemo(
+                request.get("adminMemo")
+        );
 
         return consultationRepository.save(consultation);
     }

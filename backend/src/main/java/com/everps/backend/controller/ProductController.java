@@ -4,6 +4,8 @@ import com.everps.backend.entity.Product;
 import com.everps.backend.repository.ProductRepository;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,16 +23,18 @@ public class ProductController {
 
     @GetMapping
     public List<Product> getProducts() {
-        return productRepository.findAll();
+        return productRepository.findByVisibleTrue();
     }
 
     @GetMapping("/{id}")
     public Product getProduct(
             @PathVariable Long id
     ) {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(
-                "상품을 찾을 수 없습니다."));
+        return productRepository.findByIdAndVisibleTrue(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "상품을 찾을 수 없습니다."
+        ));
     }
 
     @PostMapping

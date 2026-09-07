@@ -39,6 +39,9 @@ public class Consultation {
         createdAt = LocalDateTime.now();
     }
 
+    @Column(columnDefinition = "TEXT")
+    private String adminMemo;
+
     public Consultation() {
     }
 
@@ -112,5 +115,13 @@ public class Consultation {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getAdminMemo() {
+        return adminMemo;
+    }
+
+    public void setAdminMemo(String adminMemo) {
+        this.adminMemo = adminMemo;
     }
 }

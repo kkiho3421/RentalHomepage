@@ -1011,3 +1011,87 @@
     gap: 8px;
     cursor: pointer;
 }
+
+.admin-product-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 52px;
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.badge-visible {
+    background: #e8f7ee;
+    color: #16803c;
+}
+
+.badge-hidden {
+    background: #f1f3f5;
+    color: #6b7280;
+}
+
+.badge-featured {
+    background: #fff3d6;
+    color: #b76e00;
+}
+
+.badge-normal {
+    background: #f1f3f5;
+    color: #6b7280;
+}
+
+.consultation-admin-memo {
+    margin-top: 24px;
+}
+
+.consultation-admin-memo > span {
+    display: block;
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.consultation-admin-memo textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.consultation-admin-memo textarea:focus {
+    outline: none;
+    border-color: #555;
+}
+
+.consultation-admin-memo button {
+    margin-top: 10px;
+    padding: 9px 16px;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.consultation-admin-memo button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}

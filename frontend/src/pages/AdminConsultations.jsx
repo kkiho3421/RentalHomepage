@@ -7,6 +7,8 @@ function AdminConsultations() {
     const [error, setError] = useState("");
     const [selectedConsultation, setSelectedConsultation] = useState(null);
     const [products, setProducts] = useState([]);
+    const [adminMemo, setAdminMemo] = useState("");
+    const [savingMemo, setSavingMemo] = useState(false);
 
     const [statusFilter, setStatusFilter] = useState("ALL");
     const [searchKeyword, setSearchKeyword] = useState("");
@@ -167,6 +169,65 @@ function AdminConsultations() {
             alert(
                 "상담 삭제 중 오류가 발생했습니다."
             );
+        }
+    };
+
+    const handleSaveMemo = async () => {
+        if (!selectedConsultation) {
+            return;
+        }
+
+        try {
+            setSavingMemo(true);
+
+            const response = await adminFetch(
+                `http://localhost:8080/api/consultations/${selectedConsultation.id}/memo`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        adminMemo: adminMemo,
+                    }),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    "관리자 메모 저장에 실패했습니다."
+                );
+            }
+
+            const updatedConsultation =
+                await response.json();
+
+            setConsultations((prev) =>
+                prev.map((consultation) =>
+                    consultation.id === updatedConsultation.id
+                        ? updatedConsultation
+                        : consultation
+                )
+            );
+
+            setSelectedConsultation(updatedConsultation);
+            setAdminMemo(updatedConsultation.adminMemo ?? "");
+
+            alert("관리자 메모가 저장되었습니다.");
+
+        } catch (error) {
+            if (error.isUnauthorized) {
+                return;
+            }
+
+            console.error(error);
+
+            alert(
+                "관리자 메모를 저장하는 중 오류가 발생했습니다."
+            );
+
+        } finally {
+            setSavingMemo(false);
         }
     };
 
@@ -408,7 +469,10 @@ function AdminConsultations() {
                                         <tr 
                                             key={consultation.id}
                                             className="consultation-row"
-                                            onClick={() => setSelectedConsultation(consultation)}
+                                            onClick={() => {
+                                                setSelectedConsultation(consultation);
+                                                setAdminMemo(consultation.adminMemo ?? "");
+                                            }}
                                         >
 
                                             <td>
@@ -601,6 +665,30 @@ function AdminConsultations() {
                                     "작성된 문의 내용이 없습니다."}
                             </div>
                         </div>
+
+                        <div className="consultation-admin-memo">
+                            <span>관리자 메모</span>
+
+                            <textarea
+                                value={adminMemo}
+                                onChange={(e) =>
+                                    setAdminMemo(e.target.value)
+                                }
+                                placeholder="고객 상담 내용이나 재연락 일정 등을 기록해주세요."
+                                rows="5"
+                            />
+
+                            <button
+                                type="button"
+                                onClick={handleSaveMemo}
+                                disabled={savingMemo}
+                            >
+                                {savingMemo
+                                    ? "저장 중..."
+                                    : "메모 저장"}
+                            </button>
+                        </div>
+                        
                         <div className="consultation-modal-actions">
                             <button
                                 type="button"

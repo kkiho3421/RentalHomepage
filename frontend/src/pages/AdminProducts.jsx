@@ -877,6 +877,9 @@ function AdminProducts() {
                                     <th>종류</th>
                                     <th>출력 방식</th>
                                     <th>월 렌탈료</th>
+                                    <th>노출 여부</th>
+                                    <th>추천 여부</th>
+                                    <th>표시 순서</th>
                                     <th>관리</th>
                                 </tr>
                             </thead>
@@ -913,6 +916,26 @@ function AdminProducts() {
 
                                         <td>
                                             {product.price.toLocaleString()}원
+                                        </td>
+
+                                        <td>
+                                            <span
+                                                className={`admin-product-badge ${
+                                                    product.visible
+                                                        ? "badge-visible"
+                                                        : "badge-hidden"
+                                                }`}
+                                            >
+                                                {product.visible ? "노출" : "숨김"}
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            {product.featured ? "추천" : "일반"}
+                                        </td>
+
+                                        <td>
+                                            {product.displayOrder ?? 0}
                                         </td>
 
                                         <td>

@@ -3,6 +3,7 @@ package com.everps.backend.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.everps.backend.dto.ConsultationRequest;
 import com.everps.backend.entity.Consultation;
@@ -55,8 +57,22 @@ public class ConsultationController {
             @PathVariable Long id,
             @RequestParam String status
     ) {
+        if (!List.of(
+                "PENDING",
+                "IN_PROGRESS",
+                "COMPLETED"
+        ).contains(status)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "올바르지 않은 상담 상태입니다."
+            );
+        }
+
         Consultation consultation = consultationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("상담 정보를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "상담 정보를 찾을 수 없습니다."
+        ));
 
         consultation.setStatus(status);
 

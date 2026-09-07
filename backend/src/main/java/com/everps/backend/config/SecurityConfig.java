@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 @Configuration
 public class SecurityConfig {
@@ -32,7 +34,18 @@ public class SecurityConfig {
     ) throws Exception {
 
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf
+                    .csrfTokenRepository(
+                            CookieCsrfTokenRepository.withHttpOnlyFalse()
+                    )
+                    .csrfTokenRequestHandler(
+                            new CsrfTokenRequestAttributeHandler()
+                    )
+                    .ignoringRequestMatchers(
+                            "/api/auth/login",
+                            "/api/consultations"
+                    )
+                )
                 .cors(cors -> {
                 })
                 .authorizeHttpRequests(auth -> auth
@@ -56,6 +69,32 @@ public class SecurityConfig {
                         HttpMethod.GET,
                         "/uploads/**"
                 ).permitAll()
+                // 관리자 전용 API
+                .requestMatchers(
+                        "/api/admin/**",
+                        "/api/consultations/**",
+                        "/api/auth/password",
+                        "/api/auth/logout"
+                ).hasRole("ADMIN")
+                // 상품 등록
+                .requestMatchers(
+                        HttpMethod.POST,
+                        "/api/products/**"
+                ).hasRole("ADMIN")
+                // 상품 수정
+                .requestMatchers(
+                        HttpMethod.PUT,
+                        "/api/products/**"
+                ).hasRole("ADMIN")
+                // 상품 삭제
+                .requestMatchers(
+                        HttpMethod.DELETE,
+                        "/api/products/**"
+                ).hasRole("ADMIN")
+                // 이미지 업로드
+                .requestMatchers(
+                        "/api/uploads/**"
+                ).hasRole("ADMIN")
                 // 나머지는 로그인 필요
                 .anyRequest().authenticated()
                 )

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getProductImageUrl } from "../utils/imageUrl";
+import { API_URL } from "../config/api";
 
 function Home() {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ function Home() {
         const fetchProducts = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:8080/api/products"
+                    `${API_URL}/api/products`
                 );
 
                 if (!response.ok) {

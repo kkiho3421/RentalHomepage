@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { API_URL } from "../config/api";
 
 function AdminDashboard() {
     const [products, setProducts] = useState([]);
@@ -13,13 +14,13 @@ function AdminDashboard() {
                 const [productsResponse, consultationsResponse] =
                     await Promise.all([
                         fetch(
-                            "http://localhost:8080/api/products",
+                            `${API_URL}/api/products`,
                             {
                                 credentials: "include",
                             }
                         ),
                         fetch(
-                            "http://localhost:8080/api/consultations",
+                            `${API_URL}/api/consultations`,
                             {
                                 credentials: "include",
                             }

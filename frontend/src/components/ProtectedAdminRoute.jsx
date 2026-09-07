@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { API_URL } from "../config/api";
 
 function ProtectedAdminRoute({ children }) {
     const [authenticated, setAuthenticated] = useState(null);
@@ -8,7 +9,7 @@ function ProtectedAdminRoute({ children }) {
         const checkAuthentication = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:8080/api/auth/me",
+                    `${API_URL}/api/auth/me`,
                     {
                         credentials: "include",
                     }

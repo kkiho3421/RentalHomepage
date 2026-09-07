@@ -1,3 +1,5 @@
+import { API_URL } from "../config/api";
+
 export const getProductImageUrl = (image) => {
     if (!image) {
         return "";
@@ -11,7 +13,7 @@ export const getProductImageUrl = (image) => {
     }
 
     if (image.startsWith("/uploads/")) {
-        return `http://localhost:8080${image}`;
+        return `${API_URL}${image}`;
     }
 
     return image;

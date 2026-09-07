@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { adminFetch } from "../utils/adminFetch";
+import { API_URL } from "../config/api";
 
 function AdminConsultations() {
     const [consultations, setConsultations] = useState([]);
@@ -17,7 +18,7 @@ function AdminConsultations() {
         const fetchConsultations = async () => {
             try {
                 const response = await adminFetch(
-                    "http://localhost:8080/api/consultations"
+                    `${API_URL}/api/consultations`
                 );
 
                 if (!response.ok) {
@@ -54,7 +55,7 @@ function AdminConsultations() {
         const fetchProducts = async () => {
             try {
                 const response = await adminFetch(
-                    "http://localhost:8080/api/admin/products"
+                    `${API_URL}/api/admin/products`
                 );
 
                 if (!response.ok) {
@@ -85,7 +86,7 @@ function AdminConsultations() {
     const handleStatusChange = async (id, newStatus) => {
         try {
             const response = await adminFetch(
-                `http://localhost:8080/api/consultations/${id}/status?status=${newStatus}`,
+                `${API_URL}/api/consultations/${id}/status?status=${newStatus}`,
                 {
                     method: "PATCH",
                 }
@@ -138,7 +139,7 @@ function AdminConsultations() {
 
         try {
             const response = await adminFetch(
-                `http://localhost:8080/api/consultations/${id}`,
+                `${API_URL}/api/consultations/${id}`, 
                 {
                     method: "DELETE",
                 }
@@ -181,7 +182,7 @@ function AdminConsultations() {
             setSavingMemo(true);
 
             const response = await adminFetch(
-                `http://localhost:8080/api/consultations/${selectedConsultation.id}/memo`,
+                `${API_URL}/api/consultations/${selectedConsultation.id}/memo`,
                 {
                     method: "PATCH",
                     headers: {

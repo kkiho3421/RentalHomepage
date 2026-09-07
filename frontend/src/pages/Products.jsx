@@ -4,6 +4,7 @@ import {
     useSearchParams,
 } from "react-router-dom";
 import { getProductImageUrl } from "../utils/imageUrl";
+import { API_URL } from "../config/api";
 
 function Products() {
     const [searchParams, setSearchParams] =
@@ -62,7 +63,7 @@ function Products() {
         const fetchProducts = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:8080/api/products"
+                    `${API_URL}/api/products`
                 );
 
                 if (!response.ok) {

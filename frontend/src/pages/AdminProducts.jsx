@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getProductImageUrl } from "../utils/imageUrl";
 import { adminFetch } from "../utils/adminFetch";
+import { API_URL } from "../config/api";
 
 function AdminProducts() {
     const [products, setProducts] = useState([]);
@@ -34,7 +35,7 @@ function AdminProducts() {
         const fetchProducts = async () => {
             try {
                 const response = await adminFetch(
-                    "http://localhost:8080/api/admin/products"
+                    `${API_URL}/api/admin/products`
                 );
 
                 if (!response.ok) {
@@ -95,7 +96,7 @@ function AdminProducts() {
             }
             
             const response = await adminFetch(
-                "http://localhost:8080/api/products",
+                `${API_URL}/api/products`,
                 {
                     method: "POST",
                     headers: {
@@ -182,7 +183,7 @@ function AdminProducts() {
                 );
 
                 const imageResponse = await adminFetch(
-                    "http://localhost:8080/api/uploads/product-image",
+                    `${API_URL}/api/uploads/product-image`,
                     {
                         method: "POST",
                         body: formData,
@@ -202,7 +203,7 @@ function AdminProducts() {
             }
 
             const response = await adminFetch(
-                `http://localhost:8080/api/products/${editingProduct.id}`,
+                `${API_URL}/api/products/${editingProduct.id}`,
                 {
                     method: "PUT",
                     headers: {
@@ -262,7 +263,7 @@ function AdminProducts() {
 
         try {
             const response = await adminFetch(
-                `http://localhost:8080/api/products/${product.id}`,
+                `${API_URL}/api/products/${product.id}`,
                 {
                     method: "DELETE",
                 }
@@ -330,7 +331,7 @@ function AdminProducts() {
             );
 
             const response = await adminFetch(
-                "http://localhost:8080/api/uploads/product-image",
+                `${API_URL}/api/uploads/product-image`,
                 {
                     method: "POST",
                     body: formData,

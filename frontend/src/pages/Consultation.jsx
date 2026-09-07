@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { getProductImageUrl } from "../utils/imageUrl";
+import { API_URL } from "../config/api";
 
 function Consultation() {
     const location = useLocation();
@@ -45,7 +47,7 @@ function Consultation() {
 
     try {
         const response = await fetch(
-            "http://localhost:8080/api/consultations",
+            `${API_URL}/api/consultations`,
             {
                 method: "POST",
                 headers: {
@@ -158,7 +160,7 @@ function Consultation() {
                         <div className="consultation-product-image">
 
                             <img
-                                src={product.image}
+                                src={getProductImageUrl(product.image)}
                                 alt={product.name}
                             />
 

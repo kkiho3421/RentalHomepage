@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { API_URL } from "../config/api";
 
 function AdminHeader() {
     const navigate = useNavigate();
@@ -6,7 +7,7 @@ function AdminHeader() {
     const handleLogout = async () => {
         try {
             const response = await fetch(
-                "http://localhost:8080/api/auth/logout",
+                `${API_URL}/api/auth/logout`,
                 {
                     method: "POST",
                     credentials: "include",

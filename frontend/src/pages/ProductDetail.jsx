@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getProductImageUrl } from "../utils/imageUrl";
+import { API_URL } from "../config/api";
 
 function ProductDetail() {
     const { id } = useParams();
@@ -16,7 +17,7 @@ function ProductDetail() {
 
             try {
                 const response = await fetch(
-                    `http://localhost:8080/api/products/${id}`
+                    `${API_URL}/api/products/${id}`
                 );
 
                 if (!response.ok) {

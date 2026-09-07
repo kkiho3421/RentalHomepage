@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { adminFetch } from "../utils/adminFetch";
 import "../styles/admin.css";
+import { API_URL } from "../config/api";
 
 function AdminPassword() {
     const [currentPassword, setCurrentPassword] = useState("");
@@ -43,7 +44,7 @@ function AdminPassword() {
             setLoading(true);
 
             const response = await adminFetch(
-                "http://localhost:8080/api/auth/password",
+                `${API_URL}/api/auth/password`,
                 {
                     method: "PATCH",
                     headers: {

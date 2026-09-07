@@ -119,10 +119,12 @@ function Consultation() {
                     )}
 
                     <Link
-                        to="/products"
+                        to={product ? "/products" : "/"}
                         className="back-products-button"
                     >
-                        상품 목록으로 돌아가기
+                        {product
+                            ? "상품 목록으로 돌아가기"
+                            : "홈으로 돌아가기"}
                     </Link>
 
                 </section>
@@ -137,7 +139,7 @@ function Consultation() {
             <section className="consultation-header">
 
                 <p>
-                    RENTAL CONSULTATION
+                    EVERPS CONSULTATION
                 </p>
 
                 <h1>

@@ -7,7 +7,7 @@ function Header() {
             <div className="header-inner">
 
                 <Link to="/" className="logo">
-                    RENTAL
+                    EVERPS
                 </Link>
 
                 <nav className="nav">
@@ -34,9 +34,12 @@ function Header() {
 
                 </nav>
 
-                <button className="consult-button">
+                <Link
+                    to="/consultation"
+                    className="consult-button"
+                >
                     무료 상담
-                </button>
+                </Link>
 
             </div>
 

@@ -1178,7 +1178,11 @@ select {
 }
 
 .back-products-button {
-  display: inline-flex;
+  display: flex;
+
+  width: fit-content;
+
+  margin: 30px auto 0;
 
   align-items: center;
 

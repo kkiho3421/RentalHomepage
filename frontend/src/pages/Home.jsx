@@ -229,7 +229,7 @@ function Home() {
             {/* 상담 배너 */}
             <section className="consult-section">
                 <div>
-                    <p>RENTAL CONSULTING</p>
+                    <p>EVERPS CONSULTING</p>
                     <h2>
                         어떤 제품을 선택해야 할지
                         <br />
@@ -240,7 +240,9 @@ function Home() {
                     </span>
                 </div>
 
-                <button>
+                <button
+                    onClick={() => navigate("/consultation")}
+                >
                     무료 상담 신청
                 </button>
             </section>

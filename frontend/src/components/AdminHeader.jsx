@@ -36,7 +36,7 @@ function AdminHeader() {
                     to="/admin"
                     className="admin-logo"
                 >
-                    RENTAL ADMIN
+                    EVERPS ADMIN
                 </NavLink>
 
                 <nav className="admin-nav">

@@ -281,7 +281,7 @@ function Products() {
             {/* 페이지 헤더 */}
             <section className="page-header">
 
-                <p>RENTAL PRODUCTS</p>
+                <p>EVERPS PRODUCTS</p>
 
                 <h1>렌탈 상품</h1>
 

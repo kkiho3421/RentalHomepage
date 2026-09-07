@@ -15,7 +15,7 @@ function Footer() {
             </div>
 
             <div className="copyright">
-                © 2026 RENTAL. All rights reserved.
+                © 2026 Ever Printing Solution. All rights reserved.
             </div>
         </footer>
     );

@@ -263,7 +263,7 @@ function AdminConsultations() {
 
     const getProductName = (productId) => {
         if (!productId) {
-            return "-";
+            return "일반 상담";
         }
 
         const product = products.find(

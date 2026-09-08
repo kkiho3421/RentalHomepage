@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,8 +30,9 @@ public class Consultation {
 
     private Long productId;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status = "PENDING";
+    private ConsultationStatus status = ConsultationStatus.PENDING;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -101,11 +104,11 @@ public class Consultation {
         this.productId = productId;
     }
 
-    public String getStatus() {
+    public ConsultationStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ConsultationStatus status) {
         this.status = status;
     }
 

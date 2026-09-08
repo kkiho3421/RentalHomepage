@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.everps.backend.dto.ConsultationRequest;
 import com.everps.backend.entity.Consultation;
+import com.everps.backend.entity.ConsultationStatus;
 import com.everps.backend.repository.ConsultationRepository;
 
 @RestController
@@ -57,24 +58,28 @@ public class ConsultationController {
             @PathVariable Long id,
             @RequestParam String status
     ) {
-        if (!List.of(
-                "PENDING",
-                "IN_PROGRESS",
-                "COMPLETED"
-        ).contains(status)) {
+        ConsultationStatus consultationStatus;
+
+        try {
+            consultationStatus
+                    = ConsultationStatus.valueOf(status);
+        } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "올바르지 않은 상담 상태입니다."
             );
         }
 
-        Consultation consultation = consultationRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "상담 정보를 찾을 수 없습니다."
-        ));
+        Consultation consultation
+                = consultationRepository.findById(id)
+                        .orElseThrow(()
+                                -> new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "상담 정보를 찾을 수 없습니다."
+                        )
+                        );
 
-        consultation.setStatus(status);
+        consultation.setStatus(consultationStatus);
 
         return consultationRepository.save(consultation);
     }

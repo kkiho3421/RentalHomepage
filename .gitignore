@@ -1,0 +1,53 @@
+# =========================
+# Frontend
+# =========================
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# =========================
+# Backend
+# =========================
+backend/build/
+backend/.gradle/
+backend/out/
+
+# 환경변수 / 비밀정보
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# 업로드 파일
+backend/uploads/
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+*.iml
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# Java
+# =========================
+*.class
+
+# =========================
+# 기타 임시파일
+# =========================
+*.tmp
+*.temp

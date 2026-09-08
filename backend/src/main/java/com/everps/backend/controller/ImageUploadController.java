@@ -1,5 +1,6 @@
 package com.everps.backend.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,8 +15,8 @@ import java.util.UUID;
 @RequestMapping("/api/uploads")
 public class ImageUploadController {
 
-    private static final String UPLOAD_DIR
-            = "uploads/products";
+    @Value("${app.upload.dir}")
+    private String uploadDir;
 
     @PostMapping("/product-image")
     public ResponseEntity<Map<String, String>> uploadProductImage(
@@ -55,8 +56,11 @@ public class ImageUploadController {
         String savedFilename
                 = UUID.randomUUID() + extension;
 
-        Path uploadPath
-                = Paths.get(UPLOAD_DIR);
+        Path uploadPath = Paths.get(
+                uploadDir,
+                "products"
+        );
+        
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);

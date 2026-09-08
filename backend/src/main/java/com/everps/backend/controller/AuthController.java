@@ -4,7 +4,10 @@ import com.everps.backend.dto.LoginRequest;
 import com.everps.backend.dto.PasswordChangeRequest;
 
 import com.everps.backend.entity.Admin;
+
 import com.everps.backend.repository.AdminRepository;
+
+import com.everps.backend.service.LoginAttemptService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -32,15 +35,18 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
+    private final LoginAttemptService loginAttemptService;
 
     public AuthController(
             AuthenticationManager authenticationManager,
             AdminRepository adminRepository,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            LoginAttemptService loginAttemptService
     ) {
         this.authenticationManager = authenticationManager;
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
+        this.loginAttemptService = loginAttemptService;
     }
 
     @PostMapping("/login")
@@ -49,13 +55,32 @@ public class AuthController {
             HttpServletRequest httpRequest
     ) {
 
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            request.getUsername(),
-                            request.getPassword()));
+        String clientIp = httpRequest.getRemoteAddr();
 
-            SecurityContext context = SecurityContextHolder.createEmptyContext();
+        if (loginAttemptService.isBlocked(clientIp)) {
+            return ResponseEntity
+                    .status(HttpStatus.TOO_MANY_REQUESTS)
+                    .body(
+                            Map.of(
+                                    "message",
+                                    "로그인 시도가 너무 많습니다. 잠시 후 다시 시도해주세요."
+                            )
+                    );
+        }
+
+        try {
+            Authentication authentication =
+                    authenticationManager.authenticate(
+                            new UsernamePasswordAuthenticationToken(
+                                    request.getUsername(),
+                                    request.getPassword()
+                            )
+                    );
+
+            loginAttemptService.loginSucceeded(clientIp);
+
+            SecurityContext context =
+                    SecurityContextHolder.createEmptyContext();
 
             context.setAuthentication(authentication);
 
@@ -63,24 +88,32 @@ public class AuthController {
 
             httpRequest.getSession(true)
                     .setAttribute(
-                            HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-                            context);
+                            HttpSessionSecurityContextRepository
+                                    .SPRING_SECURITY_CONTEXT_KEY,
+                            context
+                    );
 
             return ResponseEntity.ok(
                     Map.of(
                             "username",
                             authentication.getName(),
                             "authenticated",
-                            true));
+                            true
+                    )
+            );
 
         } catch (AuthenticationException e) {
+
+            loginAttemptService.loginFailed(clientIp);
 
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .body(
                             Map.of(
                                     "message",
-                                    "아이디 또는 비밀번호가 올바르지 않습니다."));
+                                    "아이디 또는 비밀번호가 올바르지 않습니다."
+                            )
+                    );
         }
     }
 

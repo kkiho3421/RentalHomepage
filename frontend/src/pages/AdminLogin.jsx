@@ -36,6 +36,14 @@ function AdminLogin() {
                 }
             );
 
+            if (response.status === 429) {
+                alert(
+                    "로그인 정보를 5회 이상 잘못 입력했습니다.\n10분 후에 다시 시도해주세요."
+                );
+
+                return;
+            }
+
             if (!response.ok) {
                 throw new Error(
                     "아이디 또는 비밀번호가 올바르지 않습니다."

@@ -7,7 +7,9 @@ const getCookie = (name) => {
         return null;
     }
 
-    return decodeURIComponent(cookies.split("=")[1]);
+    return decodeURIComponent(
+        cookies.substring(name.length + 1)
+    );
 };
 
 export const adminFetch = async (url, options = {}) => {

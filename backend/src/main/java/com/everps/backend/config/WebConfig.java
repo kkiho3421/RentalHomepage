@@ -26,6 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations(
                         Paths.get(uploadDir)
                                 .toAbsolutePath()
+                                .normalize()
                                 .toUri()
                                 .toString()
                 );
@@ -36,7 +37,7 @@ public class WebConfig implements WebMvcConfigurer {
             CorsRegistry registry
     ) {
         registry
-                .addMapping("/**")
+                .addMapping("/api/**")
                 .allowedOrigins(
                         allowedOrigin
                 )

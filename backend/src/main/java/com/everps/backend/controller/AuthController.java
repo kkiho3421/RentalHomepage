@@ -1,32 +1,33 @@
 package com.everps.backend.controller;
 
-import com.everps.backend.dto.LoginRequest;
-import com.everps.backend.dto.PasswordChangeRequest;
-
-import com.everps.backend.entity.Admin;
-
-import com.everps.backend.repository.AdminRepository;
-
-import com.everps.backend.service.LoginAttemptService;
-
-import jakarta.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Map;
+import com.everps.backend.dto.LoginRequest;
+import com.everps.backend.dto.PasswordChangeRequest;
+import com.everps.backend.entity.Admin;
+import com.everps.backend.repository.AdminRepository;
+import com.everps.backend.service.LoginAttemptService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -69,8 +70,8 @@ public class AuthController {
         }
 
         try {
-            Authentication authentication =
-                    authenticationManager.authenticate(
+            Authentication authentication
+                    = authenticationManager.authenticate(
                             new UsernamePasswordAuthenticationToken(
                                     request.getUsername(),
                                     request.getPassword()
@@ -79,8 +80,8 @@ public class AuthController {
 
             loginAttemptService.loginSucceeded(clientIp);
 
-            SecurityContext context =
-                    SecurityContextHolder.createEmptyContext();
+            SecurityContext context
+                    = SecurityContextHolder.createEmptyContext();
 
             context.setAuthentication(authentication);
 
@@ -88,8 +89,7 @@ public class AuthController {
 
             httpRequest.getSession(true)
                     .setAttribute(
-                            HttpSessionSecurityContextRepository
-                                    .SPRING_SECURITY_CONTEXT_KEY,
+                            HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
                             context
                     );
 
@@ -138,6 +138,18 @@ public class AuthController {
                         authentication.getName(),
                         "authenticated",
                         true));
+    }
+
+    @GetMapping("/csrf")
+    public ResponseEntity<?> csrf(
+            CsrfToken csrfToken
+    ) {
+        return ResponseEntity.ok(
+                Map.of(
+                        "token",
+                        csrfToken.getToken()
+                )
+        );
     }
 
     @PostMapping("/logout")

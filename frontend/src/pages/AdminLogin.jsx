@@ -50,6 +50,20 @@ function AdminLogin() {
                 );
             }
 
+            const csrfResponse = await fetch(
+                `${API_URL}/api/auth/csrf`,
+                {
+                    method: "GET",
+                    credentials: "include",
+                }
+            );
+
+            if (!csrfResponse.ok) {
+                throw new Error(
+                    "보안 토큰을 발급받지 못했습니다."
+                );
+            }
+
             navigate("/admin/products");
 
         } catch (error) {

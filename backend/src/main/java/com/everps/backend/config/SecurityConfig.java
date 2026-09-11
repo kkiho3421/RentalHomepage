@@ -35,16 +35,20 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf
-                    .csrfTokenRepository(
-                            CookieCsrfTokenRepository.withHttpOnlyFalse()
-                    )
-                    .csrfTokenRequestHandler(
-                            new CsrfTokenRequestAttributeHandler()
-                    )
-                    .ignoringRequestMatchers(
-                            "/api/auth/login",
-                            "/api/consultations"
-                    )
+                .csrfTokenRepository(
+                        CookieCsrfTokenRepository.withHttpOnlyFalse()
+                )
+                .csrfTokenRequestHandler(
+                        new CsrfTokenRequestAttributeHandler()
+                )
+                .ignoringRequestMatchers(
+                        request -> 
+                                request.getMethod().equals("POST")
+                                        && request.getRequestURI().equals("/api/auth/login"),
+                        request -> 
+                                request.getMethod().equals("POST")
+                                        && request.getRequestURI().equals("/api/consultations")
+                )
                 )
                 .cors(cors -> {
                 })
